@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  # SQL Server instance (optional - for non-Windows developers)
+  # Uncomment the SQL Server section below if using Docker for database
+  # and comment out the appsettings.json LocalDB connection
+  
+  # sqlserver:
+  #   image: mcr.microsoft.com/mssql/server:2022-latest
+  #   container_name: cms-challenge-db
+  #   environment:
+  #     ACCEPT_EULA: "Y"
+  #     SA_PASSWORD: "YourPassword123!"
+  #     MSSQL_PID: "Developer"
+  #   ports:
+  #     - "1433:1433"
+  #   volumes:
+  #     - sqlserver_data:/var/opt/mssql
+  #   healthcheck:
+  #     test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "YourPassword123!" -Q "SELECT 1" || exit 1
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
+
+  # PostgreSQL instance (alternative for Mac/Linux)
+  # Uncomment below for PostgreSQL
+  # postgres:
+  #   image: postgres:16-alpine
+  #   container_name: cms-challenge-db
+  #   environment:
+  #     POSTGRES_DB: challengedb
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: postgres
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U postgres"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
+
+# volumes:
+#   sqlserver_data:
+#   postgres_data:
+
+# Usage:
+# 1. For SQL Server on Windows: Use LocalDB (default)
+#    dotnet run
+#
+# 2. For Docker SQL Server (any platform):
+#    docker compose up -d
+#    Update appsettings.json:
+#      "DefaultConnection": "Server=localhost,1433;Database=ChallengeDB;User Id=sa;Password=YourPassword123!"
+#    dotnet ef database update
+#    dotnet run
+#
+# 3. For Docker PostgreSQL (any platform):
+#    docker compose up -d postgres
+#    Update appsettings.json:
+#      "DefaultConnection": "Host=localhost;Database=challengedb;Username=postgres;Password=postgres"
+#    Update Program.cs: .UseNpgsql() instead of .UseSqlServer()
+#    dotnet ef database update
+#    dotnet run

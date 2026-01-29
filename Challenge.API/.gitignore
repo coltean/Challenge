@@ -1,0 +1,92 @@
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio cache/options
+.vs/
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# Rider
+.idea/
+*.sln.iml
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build folder
+bin/
+obj/
+
+# Database files
+*.mdf
+*.ldf
+*.ndf
+
+# Log files
+logs/
+*.log
+
+# NuGet
+*.nupkg
+*.snupkg
+*.nuget.props
+*.nuget.targets
+
+# Local environment/secrets
+appsettings.Development.json
+appsettings.local.json
+.env
+.env.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*~
+*.swp
+*.swo
+
+# IDE temporary files
+.classpath
+.project
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# macOS
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# Windows
+desktop.ini
+ehthumbs.db
+
+# Entity Framework
+Migrations/
