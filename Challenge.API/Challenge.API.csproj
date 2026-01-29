@@ -27,9 +27,4 @@
     <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrations\FirstDb\" />
-    <Folder Include="Migrations\SecondDb\" />
-  </ItemGroup>
-
 </Project>
