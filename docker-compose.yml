@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # SQL Server instance (optional - for non-Windows developers)
   # Uncomment the SQL Server section below if using Docker for database

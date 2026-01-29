@@ -1,0 +1,13 @@
+bin
+obj
+.git
+.gitignore
+.dockerignore
+.ds_store
+.DS_Store
+*.log
+logs/
+.env
+.env.local
+docker-compose.override.yml
+.docker/

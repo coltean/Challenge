@@ -33,7 +33,7 @@ namespace Challenge.API.Data
             {
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.EntityId).HasMaxLength(255);
-                entity.Property(e => e.Payload).HasColumnType("nvarchar(max)"); // SQL Server
+                entity.Property(e => e.Payload).HasColumnType("text"); // PostgreSQL
                 entity.HasIndex(e => new { e.EntityId, e.VersionNumber }).IsUnique();
                 entity.HasIndex(e => e.IsPublished);
             });

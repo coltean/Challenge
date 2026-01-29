@@ -34,15 +34,15 @@ builder.Services.AddSwaggerGen();
 // DATABASE CONFIGURATION
 // ============================================================================
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-    ?? "Server=(localdb)\\mssqllocaldb;Database=ChallengeDB;Trusted_Connection=true;";
+    ?? "Host=localhost;Port=5432;Database=ChallengeDB;Username=challenge_user;Password=Challenge123!@;";
 
 // ApplicationDbContext: Used for webhook processing (read/write)
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseNpgsql(connectionString));
 
 // ReadOnlyDbContext: Used for API queries (optimized for reads)
 builder.Services.AddDbContext<ReadOnlyDbContext>(options =>
-    options.UseSqlServer(connectionString)
+    options.UseNpgsql(connectionString)
         .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 
 // ============================================================================
