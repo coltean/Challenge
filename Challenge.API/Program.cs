@@ -157,3 +157,6 @@ finally
 {
     Log.CloseAndFlush();
 }
+
+// Make Program public for testing
+public partial class Program { }
