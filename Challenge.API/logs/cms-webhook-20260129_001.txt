@@ -261,3 +261,426 @@ SELECT 1
 [2026-01-29 17:13:38] [INF] Executed endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
 [2026-01-29 17:13:38] [INF] Request finished HTTP/1.1 GET http://localhost:5000/health - 200 null application/json; charset=utf-8 6.9152ms
 [2026-01-29 17:13:52] [INF] Application is shutting down...
+[2026-01-29 17:30:56] [INF] Applying database migrations...
+[2026-01-29 17:30:56] [ERR] Failed executing DbCommand (19ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+[2026-01-29 17:30:56] [INF] Applying migration '20260129153817_InitialCreate'.
+[2026-01-29 17:30:57] [INF] Database migrations completed successfully
+[2026-01-29 17:30:57] [INF] CMS Webhook API starting...
+[2026-01-29 17:30:57] [WRN] Storing keys in a directory '/root/.aspnet/DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed. For more information go to https://aka.ms/aspnet/dataprotectionwarning
+[2026-01-29 17:30:57] [INF] User profile is available. Using '/root/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+[2026-01-29 17:30:57] [INF] Creating key {2dab9a32-cbe9-4acb-8d47-619011327e8e} with creation date 2026-01-29 17:30:57Z, activation date 2026-01-29 17:30:57Z, and expiration date 2026-04-29 17:30:57Z.
+[2026-01-29 17:30:57] [WRN] No XML encryptor configured. Key {2dab9a32-cbe9-4acb-8d47-619011327e8e} may be persisted to storage in unencrypted form.
+[2026-01-29 17:30:57] [INF] Writing data to file '/root/.aspnet/DataProtection-Keys/key-2dab9a32-cbe9-4acb-8d47-619011327e8e.xml'.
+[2026-01-29 17:30:57] [WRN] Overriding HTTP_PORTS '8080' and HTTPS_PORTS ''. Binding to values defined by URLS instead 'http://+:5000'.
+[2026-01-29 17:30:57] [INF] Now listening on: http://[::]:5000
+[2026-01-29 17:30:57] [INF] Application started. Press Ctrl+C to shut down.
+[2026-01-29 17:30:57] [INF] Hosting environment: Production
+[2026-01-29 17:30:57] [INF] Content root path: /app
+[2026-01-29 17:31:00] [INF] Request starting HTTP/1.1 GET http://localhost:5000/health - null null
+[2026-01-29 17:31:00] [WRN] Failed to determine the https port for redirect.
+[2026-01-29 17:31:00] [WRN] Authentication failed: Missing Authorization header
+[2026-01-29 17:31:00] [INF] BasicAuthentication was not authenticated. Failure message: Missing Authorization header
+[2026-01-29 17:31:00] [INF] Executing endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:31:00] [INF] Route matched with {action = "Health", controller = "Health"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Health() on controller Challenge.API.Controllers.HealthController (Challenge.API).
+[2026-01-29 17:31:00] [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+[2026-01-29 17:31:00] [INF] Health check passed
+[2026-01-29 17:31:00] [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`3[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.DateTime, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+[2026-01-29 17:31:00] [INF] Executed action Challenge.API.Controllers.HealthController.Health (Challenge.API) in 95.9942ms
+[2026-01-29 17:31:00] [INF] Executed endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:31:00] [INF] Request finished HTTP/1.1 GET http://localhost:5000/health - 200 null application/json; charset=utf-8 180.8644ms
+[2026-01-29 17:31:22] [INF] Request starting HTTP/1.1 GET http://localhost:5000/health - null null
+[2026-01-29 17:31:22] [WRN] Authentication failed: Missing Authorization header
+[2026-01-29 17:31:22] [INF] BasicAuthentication was not authenticated. Failure message: Missing Authorization header
+[2026-01-29 17:31:22] [INF] Executing endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:31:22] [INF] Route matched with {action = "Health", controller = "Health"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Health() on controller Challenge.API.Controllers.HealthController (Challenge.API).
+[2026-01-29 17:31:22] [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+[2026-01-29 17:31:22] [INF] Health check passed
+[2026-01-29 17:31:22] [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`3[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.DateTime, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+[2026-01-29 17:31:22] [INF] Executed action Challenge.API.Controllers.HealthController.Health (Challenge.API) in 60.7352ms
+[2026-01-29 17:31:22] [INF] Executed endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:31:22] [INF] Request finished HTTP/1.1 GET http://localhost:5000/health - 200 null application/json; charset=utf-8 68.4426ms
+[2026-01-29 17:31:30] [INF] Application is shutting down...
+[2026-01-29 17:33:08] [INF] Applying database migrations...
+[2026-01-29 17:33:08] [INF] Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+[2026-01-29 17:33:09] [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+    "MigrationId" character varying(150) NOT NULL,
+    "ProductVersion" character varying(32) NOT NULL,
+    CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY ("MigrationId")
+);
+[2026-01-29 17:33:09] [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+LOCK TABLE "__EFMigrationsHistory" IN ACCESS EXCLUSIVE MODE
+[2026-01-29 17:33:09] [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+[2026-01-29 17:33:09] [INF] No migrations were applied. The database is already up to date.
+[2026-01-29 17:33:09] [INF] Database migrations completed successfully
+[2026-01-29 17:33:09] [INF] CMS Webhook API starting...
+[2026-01-29 17:33:09] [WRN] Storing keys in a directory '/root/.aspnet/DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed. For more information go to https://aka.ms/aspnet/dataprotectionwarning
+[2026-01-29 17:33:09] [INF] User profile is available. Using '/root/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+[2026-01-29 17:33:09] [INF] Creating key {d720c07a-94d4-4683-b2be-e35051ab1121} with creation date 2026-01-29 17:33:09Z, activation date 2026-01-29 17:33:09Z, and expiration date 2026-04-29 17:33:09Z.
+[2026-01-29 17:33:09] [WRN] No XML encryptor configured. Key {d720c07a-94d4-4683-b2be-e35051ab1121} may be persisted to storage in unencrypted form.
+[2026-01-29 17:33:09] [INF] Writing data to file '/root/.aspnet/DataProtection-Keys/key-d720c07a-94d4-4683-b2be-e35051ab1121.xml'.
+[2026-01-29 17:33:09] [WRN] Overriding HTTP_PORTS '8080' and HTTPS_PORTS ''. Binding to values defined by URLS instead 'http://+:5000'.
+[2026-01-29 17:33:09] [INF] Now listening on: http://[::]:5000
+[2026-01-29 17:33:09] [INF] Application started. Press Ctrl+C to shut down.
+[2026-01-29 17:33:09] [INF] Hosting environment: Production
+[2026-01-29 17:33:09] [INF] Content root path: /app
+[2026-01-29 17:33:13] [INF] Request starting HTTP/1.1 GET http://localhost:5000/health - null null
+[2026-01-29 17:33:13] [WRN] Failed to determine the https port for redirect.
+[2026-01-29 17:33:13] [WRN] Authentication failed: Missing Authorization header
+[2026-01-29 17:33:13] [INF] BasicAuthentication was not authenticated. Failure message: Missing Authorization header
+[2026-01-29 17:33:13] [INF] Executing endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:33:13] [INF] Route matched with {action = "Health", controller = "Health"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Health() on controller Challenge.API.Controllers.HealthController (Challenge.API).
+[2026-01-29 17:33:13] [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+[2026-01-29 17:33:13] [INF] Health check passed
+[2026-01-29 17:33:13] [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`3[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.DateTime, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+[2026-01-29 17:33:13] [INF] Executed action Challenge.API.Controllers.HealthController.Health (Challenge.API) in 72.7807ms
+[2026-01-29 17:33:13] [INF] Executed endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:33:13] [INF] Request finished HTTP/1.1 GET http://localhost:5000/health - 200 null application/json; charset=utf-8 131.9058ms
+[2026-01-29 17:33:25] [INF] Request starting HTTP/1.1 GET http://localhost:5000/health - null null
+[2026-01-29 17:33:25] [WRN] Authentication failed: Missing Authorization header
+[2026-01-29 17:33:25] [INF] BasicAuthentication was not authenticated. Failure message: Missing Authorization header
+[2026-01-29 17:33:25] [INF] Executing endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:33:25] [INF] Route matched with {action = "Health", controller = "Health"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Health() on controller Challenge.API.Controllers.HealthController (Challenge.API).
+[2026-01-29 17:33:25] [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+[2026-01-29 17:33:25] [INF] Health check passed
+[2026-01-29 17:33:25] [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`3[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.DateTime, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+[2026-01-29 17:33:25] [INF] Executed action Challenge.API.Controllers.HealthController.Health (Challenge.API) in 61.1805ms
+[2026-01-29 17:33:25] [INF] Executed endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:33:25] [INF] Request finished HTTP/1.1 GET http://localhost:5000/health - 200 null application/json; charset=utf-8 68.3682ms
+[2026-01-29 17:33:34] [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/entities - application/json 219
+[2026-01-29 17:33:34] [INF] Authentication successful for user 'admin' with role 'ADMIN'
+[2026-01-29 17:33:34] [INF] Executing endpoint 'Challenge.API.Controllers.EntitiesController.GetEntities (Challenge.API)'
+[2026-01-29 17:33:34] [INF] Route matched with {action = "GetEntities", controller = "Entities"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Challenge.API.Models.Dto.EntityDto]]] GetEntities() on controller Challenge.API.Controllers.EntitiesController (Challenge.API).
+[2026-01-29 17:33:34] [INF] GetEntities called by user: admin (Admin: True)
+[2026-01-29 17:33:34] [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT e."Id", e."CurrentPublishedVersion", e."IsPublished", e."IsDisabledByAdmin", (
+    SELECT e0."Payload"
+    FROM "EntityVersions" AS e0
+    WHERE e."Id" = e0."EntityId" AND e0."VersionNumber" = e."CurrentPublishedVersion"
+    LIMIT 1) AS "LatestPayload", e."CreatedAt", e."UpdatedAt"
+FROM "Entities" AS e
+[2026-01-29 17:33:34] [INF] Returned 0 entities to user admin
+[2026-01-29 17:33:34] [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Challenge.API.Models.Dto.EntityDto, Challenge.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2026-01-29 17:33:34] [INF] Executed action Challenge.API.Controllers.EntitiesController.GetEntities (Challenge.API) in 271.0555ms
+[2026-01-29 17:33:34] [INF] Executed endpoint 'Challenge.API.Controllers.EntitiesController.GetEntities (Challenge.API)'
+[2026-01-29 17:33:34] [INF] Request finished HTTP/1.1 GET http://localhost:5000/api/entities - 200 null application/json; charset=utf-8 287.967ms
+[2026-01-29 17:33:43] [INF] Request starting HTTP/1.1 GET http://localhost:5000/health - null null
+[2026-01-29 17:33:43] [WRN] Authentication failed: Missing Authorization header
+[2026-01-29 17:33:43] [INF] BasicAuthentication was not authenticated. Failure message: Missing Authorization header
+[2026-01-29 17:33:43] [INF] Executing endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:33:43] [INF] Route matched with {action = "Health", controller = "Health"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Health() on controller Challenge.API.Controllers.HealthController (Challenge.API).
+[2026-01-29 17:33:43] [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+[2026-01-29 17:33:43] [INF] Health check passed
+[2026-01-29 17:33:43] [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`3[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.DateTime, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+[2026-01-29 17:33:43] [INF] Executed action Challenge.API.Controllers.HealthController.Health (Challenge.API) in 2.6698ms
+[2026-01-29 17:33:43] [INF] Executed endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:33:43] [INF] Request finished HTTP/1.1 GET http://localhost:5000/health - 200 null application/json; charset=utf-8 5.3819ms
+[2026-01-29 17:33:49] [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/cms/events - application/json 198
+[2026-01-29 17:33:49] [INF] Authentication successful for user 'cmswh_challenge' with role 'CMS_WEBHOOK'
+[2026-01-29 17:33:49] [INF] Executing endpoint 'Challenge.API.Controllers.WebhookController.ReceiveEvents (Challenge.API)'
+[2026-01-29 17:33:49] [INF] Route matched with {action = "ReceiveEvents", controller = "Webhook"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ReceiveEvents(System.Collections.Generic.List`1[Challenge.API.Models.Dto.CmsEventDto]) on controller Challenge.API.Controllers.WebhookController (Challenge.API).
+[2026-01-29 17:33:49] [WRN] Invalid events batch validation failed: Version is required for publish/unpublish events
+[2026-01-29 17:33:49] [INF] Executing BadRequestObjectResult, writing value of type '<>f__AnonymousType6`1[[System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+[2026-01-29 17:33:49] [INF] Executed action Challenge.API.Controllers.WebhookController.ReceiveEvents (Challenge.API) in 91.2519ms
+[2026-01-29 17:33:49] [INF] Executed endpoint 'Challenge.API.Controllers.WebhookController.ReceiveEvents (Challenge.API)'
+[2026-01-29 17:33:49] [INF] Request finished HTTP/1.1 POST http://localhost:5000/api/cms/events - 400 null application/json; charset=utf-8 103.6901ms
+[2026-01-29 17:34:02] [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/cms/events - application/json 219
+[2026-01-29 17:34:02] [INF] Authentication successful for user 'cmswh_challenge' with role 'CMS_WEBHOOK'
+[2026-01-29 17:34:02] [INF] Executing endpoint 'Challenge.API.Controllers.WebhookController.ReceiveEvents (Challenge.API)'
+[2026-01-29 17:34:02] [INF] Route matched with {action = "ReceiveEvents", controller = "Webhook"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ReceiveEvents(System.Collections.Generic.List`1[Challenge.API.Models.Dto.CmsEventDto]) on controller Challenge.API.Controllers.WebhookController (Challenge.API).
+[2026-01-29 17:34:02] [INF] Received batch of 1 events from CMS
+[2026-01-29 17:34:02] [INF] Executed DbCommand (7ms) [Parameters=[@__eventId_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT w."Id", w."EntityId", w."ErrorMessage", w."EventId", w."EventType", w."IsProcessed", w."Payload", w."ProcessedAt", w."Timestamp", w."Version"
+FROM "WebhookEvents" AS w
+WHERE w."EventId" = @__eventId_0 AND w."IsProcessed"
+LIMIT 1
+[2026-01-29 17:34:02] [INF] Executed DbCommand (3ms) [Parameters=[@__event_Id_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT e1."Id", e1."CreatedAt", e1."CurrentPublishedVersion", e1."DeletedAt", e1."IsDisabledByAdmin", e1."IsPublished", e1."UpdatedAt", e0."Id", e0."EntityId", e0."IsPublished", e0."Payload", e0."PublishedAt", e0."UnpublishedAt", e0."VersionNumber"
+FROM (
+    SELECT e."Id", e."CreatedAt", e."CurrentPublishedVersion", e."DeletedAt", e."IsDisabledByAdmin", e."IsPublished", e."UpdatedAt"
+    FROM "Entities" AS e
+    WHERE e."Id" = @__event_Id_0
+    LIMIT 1
+) AS e1
+LEFT JOIN "EntityVersions" AS e0 ON e1."Id" = e0."EntityId"
+ORDER BY e1."Id"
+[2026-01-29 17:34:02] [INF] Successfully processed publish event for entity test-entity-1 version 1
+[2026-01-29 17:34:02] [INF] Executed DbCommand (7ms) [Parameters=[@p0='?', @p1='?' (DbType = DateTime), @p2='?' (DbType = Int32), @p3='?' (DbType = DateTime), @p4='?' (DbType = Boolean), @p5='?' (DbType = Boolean), @p6='?' (DbType = DateTime), @p7='?', @p8='?', @p9='?', @p10='?', @p11='?', @p12='?' (DbType = Boolean), @p13='?', @p14='?' (DbType = DateTime), @p15='?' (DbType = DateTime), @p16='?' (DbType = Int32), @p17='?', @p18='?' (DbType = Boolean), @p19='?', @p20='?' (DbType = DateTime), @p21='?' (DbType = DateTime), @p22='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Entities" ("Id", "CreatedAt", "CurrentPublishedVersion", "DeletedAt", "IsDisabledByAdmin", "IsPublished", "UpdatedAt")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+INSERT INTO "WebhookEvents" ("Id", "EntityId", "ErrorMessage", "EventId", "EventType", "IsProcessed", "Payload", "ProcessedAt", "Timestamp", "Version")
+VALUES (@p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16);
+INSERT INTO "EntityVersions" ("EntityId", "IsPublished", "Payload", "PublishedAt", "UnpublishedAt", "VersionNumber")
+VALUES (@p17, @p18, @p19, @p20, @p21, @p22)
+RETURNING "Id";
+[2026-01-29 17:34:02] [INF] Successfully committed batch of 1 events
+[2026-01-29 17:34:02] [INF] Successfully processed batch of 1 events
+[2026-01-29 17:34:02] [INF] Executing AcceptedResult, writing value of type '<>f__AnonymousType7`1[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+[2026-01-29 17:34:02] [INF] Executed action Challenge.API.Controllers.WebhookController.ReceiveEvents (Challenge.API) in 333.8599ms
+[2026-01-29 17:34:02] [INF] Executed endpoint 'Challenge.API.Controllers.WebhookController.ReceiveEvents (Challenge.API)'
+[2026-01-29 17:34:02] [INF] Request finished HTTP/1.1 POST http://localhost:5000/api/cms/events - 202 null application/json; charset=utf-8 338.6918ms
+[2026-01-29 17:34:07] [INF] Request starting HTTP/1.1 POST http://localhost:5000/api/cms/events - application/json 198
+[2026-01-29 17:34:07] [INF] Authentication successful for user 'cmswh_challenge' with role 'CMS_WEBHOOK'
+[2026-01-29 17:34:07] [INF] Executing endpoint 'Challenge.API.Controllers.WebhookController.ReceiveEvents (Challenge.API)'
+[2026-01-29 17:34:07] [INF] Route matched with {action = "ReceiveEvents", controller = "Webhook"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ReceiveEvents(System.Collections.Generic.List`1[Challenge.API.Models.Dto.CmsEventDto]) on controller Challenge.API.Controllers.WebhookController (Challenge.API).
+[2026-01-29 17:34:07] [WRN] Invalid events batch validation failed: Version is required for publish/unpublish events
+[2026-01-29 17:34:07] [INF] Executing BadRequestObjectResult, writing value of type '<>f__AnonymousType6`1[[System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+[2026-01-29 17:34:07] [INF] Executed action Challenge.API.Controllers.WebhookController.ReceiveEvents (Challenge.API) in 5.2151ms
+[2026-01-29 17:34:07] [INF] Executed endpoint 'Challenge.API.Controllers.WebhookController.ReceiveEvents (Challenge.API)'
+[2026-01-29 17:34:07] [INF] Request finished HTTP/1.1 POST http://localhost:5000/api/cms/events - 400 null application/json; charset=utf-8 10.1641ms
+[2026-01-29 17:34:12] [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/entities - application/json 219
+[2026-01-29 17:34:12] [INF] Authentication successful for user 'admin' with role 'ADMIN'
+[2026-01-29 17:34:12] [INF] Executing endpoint 'Challenge.API.Controllers.EntitiesController.GetEntities (Challenge.API)'
+[2026-01-29 17:34:12] [INF] Route matched with {action = "GetEntities", controller = "Entities"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Challenge.API.Models.Dto.EntityDto]]] GetEntities() on controller Challenge.API.Controllers.EntitiesController (Challenge.API).
+[2026-01-29 17:34:12] [INF] GetEntities called by user: admin (Admin: True)
+[2026-01-29 17:34:12] [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT e."Id", e."CurrentPublishedVersion", e."IsPublished", e."IsDisabledByAdmin", (
+    SELECT e0."Payload"
+    FROM "EntityVersions" AS e0
+    WHERE e."Id" = e0."EntityId" AND e0."VersionNumber" = e."CurrentPublishedVersion"
+    LIMIT 1) AS "LatestPayload", e."CreatedAt", e."UpdatedAt"
+FROM "Entities" AS e
+[2026-01-29 17:34:12] [INF] Returned 1 entities to user admin
+[2026-01-29 17:34:12] [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Challenge.API.Models.Dto.EntityDto, Challenge.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2026-01-29 17:34:12] [INF] Executed action Challenge.API.Controllers.EntitiesController.GetEntities (Challenge.API) in 19.4387ms
+[2026-01-29 17:34:12] [INF] Executed endpoint 'Challenge.API.Controllers.EntitiesController.GetEntities (Challenge.API)'
+[2026-01-29 17:34:12] [INF] Request finished HTTP/1.1 GET http://localhost:5000/api/entities - 200 null application/json; charset=utf-8 22.5051ms
+[2026-01-29 17:34:13] [INF] Request starting HTTP/1.1 GET http://localhost:5000/health - null null
+[2026-01-29 17:34:13] [WRN] Authentication failed: Missing Authorization header
+[2026-01-29 17:34:13] [INF] BasicAuthentication was not authenticated. Failure message: Missing Authorization header
+[2026-01-29 17:34:13] [INF] Executing endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:34:13] [INF] Route matched with {action = "Health", controller = "Health"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Health() on controller Challenge.API.Controllers.HealthController (Challenge.API).
+[2026-01-29 17:34:13] [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+[2026-01-29 17:34:13] [INF] Health check passed
+[2026-01-29 17:34:13] [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`3[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.DateTime, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+[2026-01-29 17:34:13] [INF] Executed action Challenge.API.Controllers.HealthController.Health (Challenge.API) in 3.2993ms
+[2026-01-29 17:34:13] [INF] Executed endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:34:13] [INF] Request finished HTTP/1.1 GET http://localhost:5000/health - 200 null application/json; charset=utf-8 6.2279ms
+[2026-01-29 17:34:43] [INF] Request starting HTTP/1.1 GET http://localhost:5000/health - null null
+[2026-01-29 17:34:43] [WRN] Authentication failed: Missing Authorization header
+[2026-01-29 17:34:43] [INF] BasicAuthentication was not authenticated. Failure message: Missing Authorization header
+[2026-01-29 17:34:43] [INF] Executing endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:34:43] [INF] Route matched with {action = "Health", controller = "Health"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Health() on controller Challenge.API.Controllers.HealthController (Challenge.API).
+[2026-01-29 17:34:43] [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+[2026-01-29 17:34:43] [INF] Health check passed
+[2026-01-29 17:34:43] [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`3[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.DateTime, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+[2026-01-29 17:34:43] [INF] Executed action Challenge.API.Controllers.HealthController.Health (Challenge.API) in 2.8792ms
+[2026-01-29 17:34:43] [INF] Executed endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:34:43] [INF] Request finished HTTP/1.1 GET http://localhost:5000/health - 200 null application/json; charset=utf-8 5.6673ms
+[2026-01-29 17:35:13] [INF] Request starting HTTP/1.1 GET http://localhost:5000/health - null null
+[2026-01-29 17:35:13] [WRN] Authentication failed: Missing Authorization header
+[2026-01-29 17:35:13] [INF] BasicAuthentication was not authenticated. Failure message: Missing Authorization header
+[2026-01-29 17:35:13] [INF] Executing endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:35:13] [INF] Route matched with {action = "Health", controller = "Health"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Health() on controller Challenge.API.Controllers.HealthController (Challenge.API).
+[2026-01-29 17:35:13] [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+[2026-01-29 17:35:13] [INF] Health check passed
+[2026-01-29 17:35:13] [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`3[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.DateTime, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+[2026-01-29 17:35:13] [INF] Executed action Challenge.API.Controllers.HealthController.Health (Challenge.API) in 3.1536ms
+[2026-01-29 17:35:13] [INF] Executed endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:35:13] [INF] Request finished HTTP/1.1 GET http://localhost:5000/health - 200 null application/json; charset=utf-8 6.2723ms
+[2026-01-29 17:35:43] [INF] Request starting HTTP/1.1 GET http://localhost:5000/health - null null
+[2026-01-29 17:35:43] [WRN] Authentication failed: Missing Authorization header
+[2026-01-29 17:35:43] [INF] BasicAuthentication was not authenticated. Failure message: Missing Authorization header
+[2026-01-29 17:35:43] [INF] Executing endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:35:43] [INF] Route matched with {action = "Health", controller = "Health"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Health() on controller Challenge.API.Controllers.HealthController (Challenge.API).
+[2026-01-29 17:35:43] [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+[2026-01-29 17:35:43] [INF] Health check passed
+[2026-01-29 17:35:43] [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`3[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.DateTime, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+[2026-01-29 17:35:43] [INF] Executed action Challenge.API.Controllers.HealthController.Health (Challenge.API) in 3.8266ms
+[2026-01-29 17:35:43] [INF] Executed endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:35:43] [INF] Request finished HTTP/1.1 GET http://localhost:5000/health - 200 null application/json; charset=utf-8 6.8191ms
+[2026-01-29 17:36:13] [INF] Request starting HTTP/1.1 GET http://localhost:5000/health - null null
+[2026-01-29 17:36:13] [WRN] Authentication failed: Missing Authorization header
+[2026-01-29 17:36:13] [INF] BasicAuthentication was not authenticated. Failure message: Missing Authorization header
+[2026-01-29 17:36:13] [INF] Executing endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:36:13] [INF] Route matched with {action = "Health", controller = "Health"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Health() on controller Challenge.API.Controllers.HealthController (Challenge.API).
+[2026-01-29 17:36:13] [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+[2026-01-29 17:36:13] [INF] Health check passed
+[2026-01-29 17:36:13] [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`3[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.DateTime, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+[2026-01-29 17:36:13] [INF] Executed action Challenge.API.Controllers.HealthController.Health (Challenge.API) in 3.6061ms
+[2026-01-29 17:36:13] [INF] Executed endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:36:13] [INF] Request finished HTTP/1.1 GET http://localhost:5000/health - 200 null application/json; charset=utf-8 6.9045ms
+[2026-01-29 17:36:43] [INF] Request starting HTTP/1.1 GET http://localhost:5000/health - null null
+[2026-01-29 17:36:43] [WRN] Authentication failed: Missing Authorization header
+[2026-01-29 17:36:43] [INF] BasicAuthentication was not authenticated. Failure message: Missing Authorization header
+[2026-01-29 17:36:43] [INF] Executing endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:36:43] [INF] Route matched with {action = "Health", controller = "Health"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Health() on controller Challenge.API.Controllers.HealthController (Challenge.API).
+[2026-01-29 17:36:43] [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+[2026-01-29 17:36:43] [INF] Health check passed
+[2026-01-29 17:36:43] [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`3[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.DateTime, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+[2026-01-29 17:36:43] [INF] Executed action Challenge.API.Controllers.HealthController.Health (Challenge.API) in 3.7792ms
+[2026-01-29 17:36:43] [INF] Executed endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:36:43] [INF] Request finished HTTP/1.1 GET http://localhost:5000/health - 200 null application/json; charset=utf-8 7.6045ms
+[2026-01-29 17:37:13] [INF] Request starting HTTP/1.1 GET http://localhost:5000/health - null null
+[2026-01-29 17:37:13] [WRN] Authentication failed: Missing Authorization header
+[2026-01-29 17:37:13] [INF] BasicAuthentication was not authenticated. Failure message: Missing Authorization header
+[2026-01-29 17:37:13] [INF] Executing endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:37:13] [INF] Route matched with {action = "Health", controller = "Health"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Health() on controller Challenge.API.Controllers.HealthController (Challenge.API).
+[2026-01-29 17:37:13] [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+[2026-01-29 17:37:13] [INF] Health check passed
+[2026-01-29 17:37:13] [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`3[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.DateTime, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+[2026-01-29 17:37:13] [INF] Executed action Challenge.API.Controllers.HealthController.Health (Challenge.API) in 7.6606ms
+[2026-01-29 17:37:13] [INF] Executed endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:37:13] [INF] Request finished HTTP/1.1 GET http://localhost:5000/health - 200 null application/json; charset=utf-8 12.9403ms
+[2026-01-29 17:37:41] [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/entities/test-entity-1/disable - application/json 219
+[2026-01-29 17:37:41] [INF] Authentication successful for user 'admin' with role 'ADMIN'
+[2026-01-29 17:37:41] [INF] Executing endpoint '405 HTTP Method Not Supported'
+[2026-01-29 17:37:41] [INF] Executed endpoint '405 HTTP Method Not Supported'
+[2026-01-29 17:37:41] [INF] Request finished HTTP/1.1 GET http://localhost:5000/api/entities/test-entity-1/disable - 405 0 null 2.6415ms
+[2026-01-29 17:37:44] [INF] Request starting HTTP/1.1 GET http://localhost:5000/health - null null
+[2026-01-29 17:37:44] [WRN] Authentication failed: Missing Authorization header
+[2026-01-29 17:37:44] [INF] BasicAuthentication was not authenticated. Failure message: Missing Authorization header
+[2026-01-29 17:37:44] [INF] Executing endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:37:44] [INF] Route matched with {action = "Health", controller = "Health"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Health() on controller Challenge.API.Controllers.HealthController (Challenge.API).
+[2026-01-29 17:37:44] [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+[2026-01-29 17:37:44] [INF] Health check passed
+[2026-01-29 17:37:44] [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`3[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.DateTime, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+[2026-01-29 17:37:44] [INF] Executed action Challenge.API.Controllers.HealthController.Health (Challenge.API) in 2.7605ms
+[2026-01-29 17:37:44] [INF] Executed endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:37:44] [INF] Request finished HTTP/1.1 GET http://localhost:5000/health - 200 null application/json; charset=utf-8 9.9004ms
+[2026-01-29 17:38:06] [INF] Request starting HTTP/1.1 PUT http://localhost:5000/api/entities/test-entity-1/disable - application/json 219
+[2026-01-29 17:38:06] [INF] Authentication successful for user 'admin' with role 'ADMIN'
+[2026-01-29 17:38:06] [INF] Executing endpoint 'Challenge.API.Controllers.EntitiesController.DisableEntity (Challenge.API)'
+[2026-01-29 17:38:06] [INF] Route matched with {action = "DisableEntity", controller = "Entities"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] DisableEntity(System.String) on controller Challenge.API.Controllers.EntitiesController (Challenge.API).
+[2026-01-29 17:38:06] [INF] DisableEntity called for test-entity-1 by admin admin
+[2026-01-29 17:38:06] [INF] Executed DbCommand (1ms) [Parameters=[@__id_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT e."Id", e."CreatedAt", e."CurrentPublishedVersion", e."DeletedAt", e."IsDisabledByAdmin", e."IsPublished", e."UpdatedAt"
+FROM "Entities" AS e
+WHERE e."Id" = @__id_0
+LIMIT 1
+[2026-01-29 17:38:06] [INF] Executed DbCommand (2ms) [Parameters=[@p2='?', @p0='?' (DbType = Boolean), @p1='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+UPDATE "Entities" SET "IsDisabledByAdmin" = @p0, "UpdatedAt" = @p1
+WHERE "Id" = @p2;
+[2026-01-29 17:38:06] [INF] Entity test-entity-1 disabled by admin admin
+[2026-01-29 17:38:06] [INF] Executing StatusCodeResult, setting HTTP status code 204
+[2026-01-29 17:38:06] [INF] Executed action Challenge.API.Controllers.EntitiesController.DisableEntity (Challenge.API) in 20.8991ms
+[2026-01-29 17:38:06] [INF] Executed endpoint 'Challenge.API.Controllers.EntitiesController.DisableEntity (Challenge.API)'
+[2026-01-29 17:38:06] [INF] Request finished HTTP/1.1 PUT http://localhost:5000/api/entities/test-entity-1/disable - 204 null null 28.7136ms
+[2026-01-29 17:38:14] [INF] Request starting HTTP/1.1 GET http://localhost:5000/health - null null
+[2026-01-29 17:38:14] [WRN] Authentication failed: Missing Authorization header
+[2026-01-29 17:38:14] [INF] BasicAuthentication was not authenticated. Failure message: Missing Authorization header
+[2026-01-29 17:38:14] [INF] Executing endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:38:14] [INF] Route matched with {action = "Health", controller = "Health"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Health() on controller Challenge.API.Controllers.HealthController (Challenge.API).
+[2026-01-29 17:38:14] [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+[2026-01-29 17:38:14] [INF] Health check passed
+[2026-01-29 17:38:14] [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`3[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.DateTime, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+[2026-01-29 17:38:14] [INF] Executed action Challenge.API.Controllers.HealthController.Health (Challenge.API) in 10.5622ms
+[2026-01-29 17:38:14] [INF] Executed endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:38:14] [INF] Request finished HTTP/1.1 GET http://localhost:5000/health - 200 null application/json; charset=utf-8 13.422ms
+[2026-01-29 17:38:17] [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/entities/ - application/json 219
+[2026-01-29 17:38:17] [INF] Authentication successful for user 'admin' with role 'ADMIN'
+[2026-01-29 17:38:17] [INF] Executing endpoint 'Challenge.API.Controllers.EntitiesController.GetEntities (Challenge.API)'
+[2026-01-29 17:38:17] [INF] Route matched with {action = "GetEntities", controller = "Entities"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Challenge.API.Models.Dto.EntityDto]]] GetEntities() on controller Challenge.API.Controllers.EntitiesController (Challenge.API).
+[2026-01-29 17:38:17] [INF] GetEntities called by user: admin (Admin: True)
+[2026-01-29 17:38:17] [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT e."Id", e."CurrentPublishedVersion", e."IsPublished", e."IsDisabledByAdmin", (
+    SELECT e0."Payload"
+    FROM "EntityVersions" AS e0
+    WHERE e."Id" = e0."EntityId" AND e0."VersionNumber" = e."CurrentPublishedVersion"
+    LIMIT 1) AS "LatestPayload", e."CreatedAt", e."UpdatedAt"
+FROM "Entities" AS e
+[2026-01-29 17:38:17] [INF] Returned 1 entities to user admin
+[2026-01-29 17:38:17] [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Challenge.API.Models.Dto.EntityDto, Challenge.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2026-01-29 17:38:17] [INF] Executed action Challenge.API.Controllers.EntitiesController.GetEntities (Challenge.API) in 10.2737ms
+[2026-01-29 17:38:17] [INF] Executed endpoint 'Challenge.API.Controllers.EntitiesController.GetEntities (Challenge.API)'
+[2026-01-29 17:38:17] [INF] Request finished HTTP/1.1 GET http://localhost:5000/api/entities/ - 200 null application/json; charset=utf-8 13.4081ms
+[2026-01-29 17:38:27] [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/entities/ - application/json 219
+[2026-01-29 17:38:27] [INF] Authentication successful for user 'admin' with role 'ADMIN'
+[2026-01-29 17:38:27] [INF] Executing endpoint 'Challenge.API.Controllers.EntitiesController.GetEntities (Challenge.API)'
+[2026-01-29 17:38:27] [INF] Route matched with {action = "GetEntities", controller = "Entities"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Challenge.API.Models.Dto.EntityDto]]] GetEntities() on controller Challenge.API.Controllers.EntitiesController (Challenge.API).
+[2026-01-29 17:38:27] [INF] GetEntities called by user: admin (Admin: True)
+[2026-01-29 17:38:27] [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT e."Id", e."CurrentPublishedVersion", e."IsPublished", e."IsDisabledByAdmin", (
+    SELECT e0."Payload"
+    FROM "EntityVersions" AS e0
+    WHERE e."Id" = e0."EntityId" AND e0."VersionNumber" = e."CurrentPublishedVersion"
+    LIMIT 1) AS "LatestPayload", e."CreatedAt", e."UpdatedAt"
+FROM "Entities" AS e
+[2026-01-29 17:38:27] [INF] Returned 1 entities to user admin
+[2026-01-29 17:38:27] [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Challenge.API.Models.Dto.EntityDto, Challenge.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2026-01-29 17:38:27] [INF] Executed action Challenge.API.Controllers.EntitiesController.GetEntities (Challenge.API) in 3.6667ms
+[2026-01-29 17:38:27] [INF] Executed endpoint 'Challenge.API.Controllers.EntitiesController.GetEntities (Challenge.API)'
+[2026-01-29 17:38:27] [INF] Request finished HTTP/1.1 GET http://localhost:5000/api/entities/ - 200 null application/json; charset=utf-8 7.0037ms
+[2026-01-29 17:38:44] [INF] Request starting HTTP/1.1 GET http://localhost:5000/health - null null
+[2026-01-29 17:38:44] [WRN] Authentication failed: Missing Authorization header
+[2026-01-29 17:38:44] [INF] BasicAuthentication was not authenticated. Failure message: Missing Authorization header
+[2026-01-29 17:38:44] [INF] Executing endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:38:44] [INF] Route matched with {action = "Health", controller = "Health"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Health() on controller Challenge.API.Controllers.HealthController (Challenge.API).
+[2026-01-29 17:38:44] [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+[2026-01-29 17:38:44] [INF] Health check passed
+[2026-01-29 17:38:44] [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`3[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.DateTime, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+[2026-01-29 17:38:44] [INF] Executed action Challenge.API.Controllers.HealthController.Health (Challenge.API) in 2.9522ms
+[2026-01-29 17:38:44] [INF] Executed endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:38:44] [INF] Request finished HTTP/1.1 GET http://localhost:5000/health - 200 null application/json; charset=utf-8 5.5991ms
+[2026-01-29 17:38:56] [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/entities/ - application/json 219
+[2026-01-29 17:38:56] [INF] Authentication successful for user 'admin' with role 'ADMIN'
+[2026-01-29 17:38:56] [INF] Executing endpoint 'Challenge.API.Controllers.EntitiesController.GetEntities (Challenge.API)'
+[2026-01-29 17:38:56] [INF] Route matched with {action = "GetEntities", controller = "Entities"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Challenge.API.Models.Dto.EntityDto]]] GetEntities() on controller Challenge.API.Controllers.EntitiesController (Challenge.API).
+[2026-01-29 17:38:56] [INF] GetEntities called by user: admin (Admin: True)
+[2026-01-29 17:38:56] [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT e."Id", e."CurrentPublishedVersion", e."IsPublished", e."IsDisabledByAdmin", (
+    SELECT e0."Payload"
+    FROM "EntityVersions" AS e0
+    WHERE e."Id" = e0."EntityId" AND e0."VersionNumber" = e."CurrentPublishedVersion"
+    LIMIT 1) AS "LatestPayload", e."CreatedAt", e."UpdatedAt"
+FROM "Entities" AS e
+[2026-01-29 17:38:56] [INF] Returned 1 entities to user admin
+[2026-01-29 17:38:56] [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Challenge.API.Models.Dto.EntityDto, Challenge.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2026-01-29 17:38:56] [INF] Executed action Challenge.API.Controllers.EntitiesController.GetEntities (Challenge.API) in 4.6657ms
+[2026-01-29 17:38:56] [INF] Executed endpoint 'Challenge.API.Controllers.EntitiesController.GetEntities (Challenge.API)'
+[2026-01-29 17:38:56] [INF] Request finished HTTP/1.1 GET http://localhost:5000/api/entities/ - 200 null application/json; charset=utf-8 7.4471ms
+[2026-01-29 17:39:04] [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/entities/ - application/json 219
+[2026-01-29 17:39:04] [INF] Authentication successful for user 'apiuser_demo' with role 'API_USER'
+[2026-01-29 17:39:04] [INF] Executing endpoint 'Challenge.API.Controllers.EntitiesController.GetEntities (Challenge.API)'
+[2026-01-29 17:39:04] [INF] Route matched with {action = "GetEntities", controller = "Entities"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Challenge.API.Models.Dto.EntityDto]]] GetEntities() on controller Challenge.API.Controllers.EntitiesController (Challenge.API).
+[2026-01-29 17:39:04] [INF] GetEntities called by user: apiuser_demo (Admin: False)
+[2026-01-29 17:39:04] [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT e."Id", e."CurrentPublishedVersion", e."IsPublished", e."IsDisabledByAdmin", (
+    SELECT e0."Payload"
+    FROM "EntityVersions" AS e0
+    WHERE e."Id" = e0."EntityId" AND e0."VersionNumber" = e."CurrentPublishedVersion"
+    LIMIT 1) AS "LatestPayload", e."CreatedAt", e."UpdatedAt"
+FROM "Entities" AS e
+WHERE e."IsPublished" AND NOT (e."IsDisabledByAdmin")
+[2026-01-29 17:39:04] [INF] Returned 0 entities to user apiuser_demo
+[2026-01-29 17:39:04] [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Challenge.API.Models.Dto.EntityDto, Challenge.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+[2026-01-29 17:39:04] [INF] Executed action Challenge.API.Controllers.EntitiesController.GetEntities (Challenge.API) in 13.963ms
+[2026-01-29 17:39:04] [INF] Executed endpoint 'Challenge.API.Controllers.EntitiesController.GetEntities (Challenge.API)'
+[2026-01-29 17:39:04] [INF] Request finished HTTP/1.1 GET http://localhost:5000/api/entities/ - 200 null application/json; charset=utf-8 16.8701ms
+[2026-01-29 17:39:14] [INF] Request starting HTTP/1.1 GET http://localhost:5000/health - null null
+[2026-01-29 17:39:14] [WRN] Authentication failed: Missing Authorization header
+[2026-01-29 17:39:14] [INF] BasicAuthentication was not authenticated. Failure message: Missing Authorization header
+[2026-01-29 17:39:14] [INF] Executing endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:39:14] [INF] Route matched with {action = "Health", controller = "Health"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Health() on controller Challenge.API.Controllers.HealthController (Challenge.API).
+[2026-01-29 17:39:14] [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+[2026-01-29 17:39:14] [INF] Health check passed
+[2026-01-29 17:39:14] [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`3[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.DateTime, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+[2026-01-29 17:39:14] [INF] Executed action Challenge.API.Controllers.HealthController.Health (Challenge.API) in 3.6748ms
+[2026-01-29 17:39:14] [INF] Executed endpoint 'Challenge.API.Controllers.HealthController.Health (Challenge.API)'
+[2026-01-29 17:39:14] [INF] Request finished HTTP/1.1 GET http://localhost:5000/health - 200 null application/json; charset=utf-8 6.2066ms
+[2026-01-29 17:39:26] [INF] Application is shutting down...

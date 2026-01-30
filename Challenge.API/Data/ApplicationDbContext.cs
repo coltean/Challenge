@@ -21,7 +21,6 @@ namespace Challenge.API.Data
                 entity.Property(e => e.Id).HasMaxLength(255);
                 entity.HasIndex(e => e.IsPublished);
                 entity.HasIndex(e => e.IsDisabledByAdmin);
-                entity.HasIndex(e => e.DeletedAt);
 
                 entity.HasMany(e => e.Versions)
                     .WithOne(v => v.Entity)
@@ -44,7 +43,6 @@ namespace Challenge.API.Data
                 entity.Property(e => e.EventId).HasMaxLength(255);
                 entity.HasIndex(e => e.EventId).IsUnique();
                 entity.HasIndex(e => e.IsProcessed);
-                entity.HasIndex(e => e.ProcessedAt);
             });
         }
     }

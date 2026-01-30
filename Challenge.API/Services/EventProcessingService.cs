@@ -3,6 +3,8 @@ using System.Text.Json;
 using Challenge.API.Data;
 using Challenge.API.Models;
 using Challenge.API.Models.Dto;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Challenge.API.Services
 {
@@ -377,7 +379,9 @@ namespace Challenge.API.Services
         {
             // Create deterministic hash from event properties
             var key = $"{@event.Type}_{@event.Id}_{@event.Version}_{@event.Timestamp:O}";
-            return key.GetHashCode().ToString();
+
+            var bytes = SHA256.HashData(Encoding.UTF8.GetBytes(key));
+            return Convert.ToHexString(bytes);
         }
     }
 }
