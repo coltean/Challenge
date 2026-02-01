@@ -86,8 +86,6 @@ namespace Challenge.API.Migrations.ApplicationDb
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IsPublished");
-
                     b.HasIndex("EntityId", "VersionNumber")
                         .IsUnique();
 
@@ -134,8 +132,6 @@ namespace Challenge.API.Migrations.ApplicationDb
 
                     b.HasIndex("EventId")
                         .IsUnique();
-
-                    b.HasIndex("IsProcessed");
 
                     b.ToTable("WebhookEvents");
                 });

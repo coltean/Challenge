@@ -1,63 +1,74 @@
 services:
-  # SQL Server instance (optional - for non-Windows developers)
-  # Uncomment the SQL Server section below if using Docker for database
-  # and comment out the appsettings.json LocalDB connection
-  
-  # sqlserver:
-  #   image: mcr.microsoft.com/mssql/server:2022-latest
-  #   container_name: cms-challenge-db
-  #   environment:
-  #     ACCEPT_EULA: "Y"
-  #     SA_PASSWORD: "YourPassword123!"
-  #     MSSQL_PID: "Developer"
-  #   ports:
-  #     - "1433:1433"
-  #   volumes:
-  #     - sqlserver_data:/var/opt/mssql
-  #   healthcheck:
-  #     test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "YourPassword123!" -Q "SELECT 1" || exit 1
-  #     interval: 10s
-  #     timeout: 5s
-  #     retries: 5
+  database:
+    image: postgres:16-alpine
+    container_name: challenge-db
+    environment:
+      POSTGRES_USER: challenge_user
+      POSTGRES_PASSWORD: Challenge123!@
+      POSTGRES_DB: ChallengeDB
+      POSTGRES_INITDB_ARGS: "-c shared_buffers=256MB -c max_connections=200"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U challenge_user -d ChallengeDB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - challenge-network
+    restart: unless-stopped
 
-  # PostgreSQL instance (alternative for Mac/Linux)
-  # Uncomment below for PostgreSQL
-  # postgres:
-  #   image: postgres:16-alpine
-  #   container_name: cms-challenge-db
-  #   environment:
-  #     POSTGRES_DB: challengedb
-  #     POSTGRES_USER: postgres
-  #     POSTGRES_PASSWORD: postgres
-  #   ports:
-  #     - "5432:5432"
-  #   volumes:
-  #     - postgres_data:/var/lib/postgresql/data
-  #   healthcheck:
-  #     test: ["CMD-SHELL", "pg_isready -U postgres"]
-  #     interval: 10s
-  #     timeout: 5s
-  #     retries: 5
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: challenge-rabbitmq
+    ports:
+      - "15673:15672"
+      - "5673:5672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - challenge-network
+    restart: unless-stopped
 
-# volumes:
-#   sqlserver_data:
-#   postgres_data:
+  api:
+    build:
+      context: .
+      dockerfile: Challenge.API/Dockerfile
+      args:
+        BUILDKIT_INLINE_CACHE: 1
+    container_name: challenge-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: "http://+:5000"
+      ConnectionStrings__DefaultConnection: "Host=database;Port=5432;Database=ChallengeDB;Username=challenge_user;Password=Challenge123!@;Include Error Detail=true"
+      RabbitMq__HostName: rabbitmq
+    ports:
+      - "5000:5000"
+    depends_on:
+      database:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    volumes:
+      - ./Challenge.API/logs:/app/logs
+    networks:
+      - challenge-network
+    restart: unless-stopped
 
-# Usage:
-# 1. For SQL Server on Windows: Use LocalDB (default)
-#    dotnet run
-#
-# 2. For Docker SQL Server (any platform):
-#    docker compose up -d
-#    Update appsettings.json:
-#      "DefaultConnection": "Server=localhost,1433;Database=ChallengeDB;User Id=sa;Password=YourPassword123!"
-#    dotnet ef database update
-#    dotnet run
-#
-# 3. For Docker PostgreSQL (any platform):
-#    docker compose up -d postgres
-#    Update appsettings.json:
-#      "DefaultConnection": "Host=localhost;Database=challengedb;Username=postgres;Password=postgres"
-#    Update Program.cs: .UseNpgsql() instead of .UseSqlServer()
-#    dotnet ef database update
-#    dotnet run
+volumes:
+  postgres-data:
+    driver: local
+
+networks:
+  challenge-network:
+    driver: bridge

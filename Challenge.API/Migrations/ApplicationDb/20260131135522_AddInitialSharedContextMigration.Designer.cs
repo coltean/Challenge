@@ -9,11 +9,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Challenge.API.Migrations.ReadOnlyDb
+namespace Challenge.API.Migrations.ApplicationDb
 {
-    [DbContext(typeof(ReadOnlyDbContext))]
-    [Migration("20260129153953_InitialCreate")]
-    partial class InitialCreate
+    [DbContext(typeof(ApplicationDbContext))]
+    [Migration("20260131135522_AddInitialSharedContextMigration")]
+    partial class AddInitialSharedContextMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -93,6 +93,50 @@ namespace Challenge.API.Migrations.ReadOnlyDb
                         .IsUnique();
 
                     b.ToTable("EntityVersions");
+                });
+
+            modelBuilder.Entity("Challenge.API.Models.WebhookEvent", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("EntityId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ErrorMessage")
+                        .HasColumnType("text");
+
+                    b.Property<string>("EventId")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<string>("EventType")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsProcessed")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Payload")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("ProcessedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("Version")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId")
+                        .IsUnique();
+
+                    b.ToTable("WebhookEvents");
                 });
 
             modelBuilder.Entity("Challenge.API.Models.EntityVersion", b =>

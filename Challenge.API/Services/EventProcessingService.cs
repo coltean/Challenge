@@ -110,6 +110,8 @@ namespace Challenge.API.Services
                         await LogFailedEventAsync(@event, "Batch transaction rolled back");
                     }
 
+                    _context.ChangeTracker.Clear();
+
                     throw;
                 }
             }
@@ -212,6 +214,7 @@ namespace Challenge.API.Services
             {
                 _logger.LogWarning($"Version {@event.Version} already exists for entity {@event.Id}, updating");
                 existingVersion.Payload = @event.Payload != null ? JsonSerializer.Serialize(@event.Payload) : "";
+                existingVersion.IsPublished = true;
                 existingVersion.PublishedAt = @event.Timestamp;
             }
             else
@@ -252,32 +255,7 @@ namespace Challenge.API.Services
 
             if (entity == null)
             {
-                _logger.LogWarning(
-                    $"Unpublish event received for non-existent entity: {@event.Id}. Creating with unpublished state.");
-                
-                // Create entity with unpublished version (corner case: unpublish before publish)
-                entity = new Entity
-                {
-                    Id = @event.Id,
-                    CreatedAt = DateTime.UtcNow,
-                    IsPublished = false,
-                    IsDisabledByAdmin = false,
-                    CurrentPublishedVersion = 0,
-                    Versions = new List<EntityVersion>()
-                };
-
-                var version = new EntityVersion
-                {
-                    EntityId = @event.Id,
-                    VersionNumber = @event.Version.Value,
-                    Payload = @event.Payload != null ? JsonSerializer.Serialize(@event.Payload) : "",
-                    IsPublished = false,
-                    PublishedAt = DateTime.UtcNow,
-                    UnpublishedAt = @event.Timestamp
-                };
-
-                entity.Versions.Add(version);
-                _context.Entities.Add(entity);
+                _logger.LogWarning($"Unpublish event received for non-existent entity: {@event.Id}. Ignoring.");
                 return;
             }
 

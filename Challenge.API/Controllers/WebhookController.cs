@@ -10,35 +10,23 @@ namespace Challenge.API.Controllers
     [Route("api")]
     public class WebhookController : ControllerBase
     {
-        private readonly IEventProcessingService _eventProcessingService;
+        private readonly IEventQueueService _eventQueueService;
         private readonly IValidator<List<CmsEventDto>> _batchValidator;
         private readonly ILogger<WebhookController> _logger;
 
         public WebhookController(
-            IEventProcessingService eventProcessingService,
+            IEventQueueService eventQueueService,
             IValidator<List<CmsEventDto>> batchValidator,
             ILogger<WebhookController> logger)
         {
-            _eventProcessingService = eventProcessingService;
+            _eventQueueService = eventQueueService;
             _batchValidator = batchValidator;
             _logger = logger;
         }
 
         /// <summary>
-        /// Receives batch events from CMS.
-        /// Uses synchronous processing for data consistency and version sequencing.
-        /// 
-        /// Why Sync (not async)?
-        /// 1. Version Integrity: Events must be processed in order (v1 ? v2 ? unpublish v2)
-        /// 2. Idempotency: Duplicate detection happens atomically
-        /// 3. Small Batches: Max 1000 events = ~500ms processing (acceptable latency)
-        /// 4. Transaction Safety: Atomic all-or-nothing persistence
-        /// 5. Observability: Easy error logging and debugging
-        /// 
-        /// For high-throughput scenarios (100k+ events/day), consider:
-        /// - Message queue (RabbitMQ, Azure Service Bus)
-        /// - Background job processor (Hangfire, Quartz)
-        /// - Event sourcing with eventual consistency
+        /// Receives batch events from CMS, validates them, and enqueues them for background processing.
+        /// The webhook endpoint remains fast by offloading persistence to a worker that reads from RabbitMQ.
         /// </summary>
         [HttpPost("cms/events")]
         [Authorize(Roles = "CMS_WEBHOOK")]
@@ -60,29 +48,25 @@ namespace Challenge.API.Controllers
             if (!validationResult.IsValid)
             {
                 var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
-                _logger.LogWarning($"Invalid events batch validation failed: {string.Join(", ", errors)}");
+                _logger.LogWarning("Invalid events batch validation failed: {Errors}", string.Join(", ", errors));
                 return BadRequest(new { errors });
             }
 
-            _logger.LogInformation($"Received batch of {events.Count} events from CMS");
+            _logger.LogInformation("Received batch of {Count} events from CMS", events.Count);
 
             try
             {
-                // Synchronous processing ensures:
-                // - Version ordering is maintained
-                // - Duplicate detection is atomic
-                // - All-or-nothing transaction safety
-                await _eventProcessingService.ProcessEventsAsync(events);
+                await _eventQueueService.EnqueueEventsAsync(events);
 
-                _logger.LogInformation($"Successfully processed batch of {events.Count} events");
+                _logger.LogInformation("Batch of {Count} events queued for processing", events.Count);
 
                 // 202 Accepted: Batch has been accepted and is being/will be processed
                 return Accepted(new { message = $"Batch of {events.Count} events accepted for processing" });
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Critical error processing events batch: {ex.Message}", ex);
-                return StatusCode(500, new { error = "Internal server error while processing events" });
+                _logger.LogError(ex, "Critical error enqueueing events batch");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Internal server error while queueing events" });
             }
         }
     }

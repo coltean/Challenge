@@ -6,6 +6,7 @@ using Challenge.API.Authentication;
 using Challenge.API.Services;
 using Challenge.API.Validation;
 using Challenge.API.Models.Dto;
+using Challenge.API.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,36 +37,28 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? "Host=localhost;Port=5432;Database=ChallengeDB;Username=challenge_user;Password=Challenge123!@;";
 
-// ApplicationDbContext: Used for webhook processing (read/write)
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(connectionString));
+if (builder.Environment.IsEnvironment("Testing"))
+{
+    // ApplicationDbContext: Used for webhook processing (read/write)
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseInMemoryDatabase("ChallengeTests"));
 
-// ReadOnlyDbContext: Used for API queries (optimized for reads)
-builder.Services.AddDbContext<ReadOnlyDbContext>(options =>
-    options.UseNpgsql(connectionString)
-        .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
+    // ReadOnlyDbContext: Used for API queries (optimized for reads)
+    builder.Services.AddDbContext<ReadOnlyDbContext>(options =>
+        options.UseInMemoryDatabase("ChallengeTests")
+            .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
+}
+else
+{
+    // ApplicationDbContext: Used for webhook processing (read/write)
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseNpgsql(connectionString));
 
-// ============================================================================
-// AUTHENTICATION - BASIC AUTH WITH CUSTOM CREDENTIALS
-// ============================================================================
-// 
-// RATIONALE FOR BASIC AUTH:
-// - Simple, widely supported across platforms
-// - Suitable for internal service-to-service communication
-// - Easy to manage credentials in configuration
-// - No complex token management required
-//
-// CREDENTIALS MANAGEMENT:
-// - CMS Webhook: Special role for processing events
-// - API Users: Standard role for data consumption
-// - Admins: Elevated role for entity management
-//
-// FOR PRODUCTION:
-// - Use secrets management (Azure Key Vault, AWS Secrets Manager)
-// - Consider OAuth2/JWT for user-facing APIs
-// - Rotate passwords regularly
-// - Use HTTPS only
-// ============================================================================
+    // ReadOnlyDbContext: Used for API queries (optimized for reads)
+    builder.Services.AddDbContext<ReadOnlyDbContext>(options =>
+        options.UseNpgsql(connectionString)
+            .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
+}
 
 builder.Services.AddAuthentication("BasicAuthentication")
     .AddScheme<BasicAuthenticationOptions, BasicAuthenticationHandler>(
@@ -87,21 +80,21 @@ builder.Services.AddAuthentication("BasicAuthentication")
 
 builder.Services.AddAuthorization();
 
-// ============================================================================
-// FLUENT VALIDATION - INPUT SANITIZATION & VALIDATION
-// ============================================================================
-builder.Services.AddScoped<IValidator<List<CmsEventDto>>, BatchEventValidator>();
-builder.Services.AddScoped<IValidator<CmsEventDto>, CmsEventValidator>();
 
-// ============================================================================
-// APPLICATION SERVICES
-// ============================================================================
+builder.Services.Configure<RabbitMqSettings>(builder.Configuration.GetSection("RabbitMq"));
+builder.Services.AddSingleton<IEventQueueService, RabbitMqEventQueueService>();
+builder.Services.AddHostedService<RabbitMqEventConsumer>();
+
 // Event Processing Service: Handles synchronous webhook event processing
-// Rationale: 
+// Rationale:
 // - Version sequencing must be guaranteed (events processed in order)
 // - Idempotency checks must be atomic
 // - Transaction scope keeps consistency high
 builder.Services.AddScoped<IEventProcessingService, EventProcessingService>();
+
+
+builder.Services.AddScoped<IValidator<List<CmsEventDto>>, BatchEventValidator>();
+builder.Services.AddScoped<IValidator<CmsEventDto>, CmsEventValidator>();
 
 // ============================================================================
 // BUILD AND CONFIGURE MIDDLEWARE
@@ -126,21 +119,24 @@ app.MapControllers();
 // ============================================================================
 // DATABASE INITIALIZATION
 // ============================================================================
-try
+if (!app.Environment.IsEnvironment("Testing"))
 {
-    using (var scope = app.Services.CreateScope())
+    try
     {
-        var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-        
-        Log.Information("Applying database migrations...");
-        await dbContext.Database.MigrateAsync();
-        Log.Information("Database migrations completed successfully");
+        using (var scope = app.Services.CreateScope())
+        {
+            var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            
+            Log.Information("Applying database migrations...");
+            await dbContext.Database.MigrateAsync();
+            Log.Information("Database migrations completed successfully");
+        }
     }
-}
-catch (Exception ex)
-{
-    Log.Fatal(ex, "Database initialization failed");
-    throw;
+    catch (Exception ex)
+    {
+        Log.Fatal(ex, "Database initialization failed");
+        throw;
+    }
 }
 
 Log.Information("CMS Webhook API starting...");

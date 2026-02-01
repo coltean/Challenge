@@ -28,13 +28,6 @@ namespace Challenge.API.Authentication
     /// <summary>
     /// Implementation of Basic Authentication handler.
     /// Parses Authorization header and validates credentials.
-    /// 
-    /// Basic Auth Format:
-    /// Authorization: Basic <base64(username:password)>
-    /// 
-    /// Example:
-    /// Authorization: Basic Y21zX3dlYmhvb2tfa2V5OmExYjJjM2Q0LWU1ZjYtNzg5MC1hYmNkLWVmMTIzNDU2Nzg5MA==
-    /// (decodes to: cms_webhook_key:a1b2c3d4-e5f6-7890-abcd-ef1234567890)
     /// </summary>
     public class BasicAuthenticationHandler : AuthenticationHandler<BasicAuthenticationOptions>
     {

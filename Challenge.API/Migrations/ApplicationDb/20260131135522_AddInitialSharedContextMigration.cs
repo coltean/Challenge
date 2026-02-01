@@ -4,10 +4,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Challenge.API.Migrations.ReadOnlyDb
+namespace Challenge.API.Migrations.ApplicationDb
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class AddInitialSharedContextMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -27,6 +27,26 @@ namespace Challenge.API.Migrations.ReadOnlyDb
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Entities", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WebhookEvents",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    EventId = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    EventType = table.Column<string>(type: "text", nullable: false),
+                    EntityId = table.Column<string>(type: "text", nullable: false),
+                    Version = table.Column<int>(type: "integer", nullable: true),
+                    Payload = table.Column<string>(type: "text", nullable: true),
+                    Timestamp = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ProcessedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ErrorMessage = table.Column<string>(type: "text", nullable: true),
+                    IsProcessed = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WebhookEvents", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -68,6 +88,12 @@ namespace Challenge.API.Migrations.ReadOnlyDb
                 table: "EntityVersions",
                 columns: new[] { "EntityId", "VersionNumber" },
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WebhookEvents_EventId",
+                table: "WebhookEvents",
+                column: "EventId",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -75,6 +101,9 @@ namespace Challenge.API.Migrations.ReadOnlyDb
         {
             migrationBuilder.DropTable(
                 name: "EntityVersions");
+
+            migrationBuilder.DropTable(
+                name: "WebhookEvents");
 
             migrationBuilder.DropTable(
                 name: "Entities");
