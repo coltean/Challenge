@@ -112,7 +112,7 @@ public sealed class RabbitMqEventConsumer : BackgroundService
 
             using var scope = _scopeFactory.CreateScope();
             var processor = scope.ServiceProvider.GetRequiredService<IEventProcessingService>();
-            await processor.ProcessEventsAsync(new List<CmsEventDto> { cmsEvent });
+            await processor.ProcessEventAsync(cmsEvent);
 
             _channel.BasicAck(eventArgs.DeliveryTag, false);
             _logger.LogInformation("Successfully processed event {EventId}", cmsEvent.Id);

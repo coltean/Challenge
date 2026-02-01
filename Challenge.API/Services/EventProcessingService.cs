@@ -63,7 +63,7 @@ namespace Challenge.API.Services
     /// </summary>
     public interface IEventProcessingService
     {
-        Task ProcessEventsAsync(List<CmsEventDto> events);
+        Task ProcessEventAsync(CmsEventDto @event);
     }
 
     public class EventProcessingService : IEventProcessingService
@@ -82,33 +82,25 @@ namespace Challenge.API.Services
         /// <summary>
         /// Process batch of events synchronously within a single transaction.
         /// </summary>
-        public async Task ProcessEventsAsync(List<CmsEventDto> events)
+        public async Task ProcessEventAsync(CmsEventDto @event)
         {
             using (var transaction = await _context.Database.BeginTransactionAsync())
             {
                 try
                 {
-                    foreach (var @event in events)
-                    {
-                        await ProcessSingleEventAsync(@event);
-                    }
+                    await ProcessSingleEventAsync(@event);
 
                     // All events processed successfully - commit transaction
                     await _context.SaveChangesAsync();
                     await transaction.CommitAsync();
-
-                    _logger.LogInformation($"Successfully committed batch of {events.Count} events");
                 }
                 catch (Exception ex)
                 {
                     await transaction.RollbackAsync();
                     _logger.LogError($"Transaction rolled back due to error: {ex.Message}", ex);
 
-                    // Log individual failures for debugging
-                    foreach (var @event in events)
-                    {
-                        await LogFailedEventAsync(@event, "Batch transaction rolled back");
-                    }
+                    // Log failures for debugging
+                    await LogFailedEventAsync(@event, "Transaction rolled back");
 
                     _context.ChangeTracker.Clear();
 
