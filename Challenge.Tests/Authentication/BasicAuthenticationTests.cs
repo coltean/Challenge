@@ -22,11 +22,9 @@ namespace Challenge.Tests.Authentication
     public class BasicAuthenticationTests : IClassFixture<Challenge.Tests.Authentication.TestWebApplicationFactory>
     {
         private readonly HttpClient _client;
-        private readonly WebApplicationFactory<Program> _factory;
 
         public BasicAuthenticationTests(TestWebApplicationFactory factory)
         {
-            _factory = factory;
             _client = factory.CreateClient();
         }
 
@@ -351,12 +349,12 @@ namespace Challenge.Tests.Authentication
         #region Credentials Test Data
 
         [Theory]
-        [InlineData("cmswh_challenge", "a1b2c3d4-e5f6-7890-abcd-ef1234567890", "CMS_WEBHOOK", "/api/cms/events", true)]
-        [InlineData("apiuser_demo", "f0e9d8c7-b6a5-4321-8765-fedcba987654", "API_USER", "/api/entities", true)]
-        [InlineData("admin", "12345678-1234-1234-1234-123456789012", "ADMIN", "/api/entities", true)]
-        [InlineData("cmswh_challenge", "wrong-password", "CMS_WEBHOOK", "/api/cms/events", false)]
-        [InlineData("apiuser_demo", "wrong-password", "API_USER", "/api/entities", false)]
-        public async Task Theory_CredentialsValidation(string username, string password, string role, string endpoint, bool shouldSucceed)
+        [InlineData("cmswh_challenge", "a1b2c3d4-e5f6-7890-abcd-ef1234567890", "/api/cms/events", true)]
+        [InlineData("apiuser_demo", "f0e9d8c7-b6a5-4321-8765-fedcba987654", "/api/entities", true)]
+        [InlineData("admin", "12345678-1234-1234-1234-123456789012", "/api/entities", true)]
+        [InlineData("cmswh_challenge", "wrong-password", "/api/cms/events", false)]
+        [InlineData("apiuser_demo", "wrong-password", "/api/entities", false)]
+        public async Task Theory_CredentialsValidation(string username, string password, string endpoint, bool shouldSucceed)
         {
             // Arrange
             HttpMethod method = endpoint == "/api/cms/events" ? HttpMethod.Post : HttpMethod.Get;

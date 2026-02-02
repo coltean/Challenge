@@ -10,56 +10,6 @@ namespace Challenge.API.Services
 {
     /// <summary>
     /// Service responsible for processing incoming CMS events.
-    /// 
-    /// SYNCHRONOUS PROCESSING RATIONALE:
-    /// ================================
-    /// 
-    /// This service uses synchronous (non-queued) processing because:
-    /// 
-    /// 1. VERSION SEQUENCING
-    ///    - Events for the same entity MUST be processed in order
-    ///    - Publish v1 ? Publish v2 ? Unpublish v2
-    ///    - Async queues can reorder messages, breaking version integrity
-    /// 
-    /// 2. IDEMPOTENCY GUARANTEE
-    ///    - Duplicate detection must happen BEFORE database write
-    ///    - Synchronous: Check EventId ? Insert in same transaction
-    ///    - Async: Risk of race condition between duplicate check and insert
-    /// 
-    /// 3. ATOMIC TRANSACTIONS
-    ///    - All events in batch processed within single transaction
-    ///    - If one fails, entire batch fails (easier rollback)
-    ///    - Prevents partial state inconsistencies
-    /// 
-    /// 4. ACCEPTABLE LATENCY
-    ///    - Max batch: 1000 events
-    ///    - Typical DB throughput: 100-500ms per batch
-    ///    - User receives 202 Accepted immediately
-    ///    - Processing happens server-side (async from HTTP perspective)
-    /// 
-    /// 5. BETTER OBSERVABILITY
-    ///    - All logging happens synchronously
-    ///    - Error investigation is straightforward
-    ///    - No need to correlate async failures with requests
-    /// 
-    /// ALTERNATIVE APPROACHES FOR HIGH-THROUGHPUT:
-    /// ============================================
-    /// If you need to handle 100k+ events/day:
-    /// 
-    /// Option A: Message Queue (Recommended for scale)
-    ///   - RabbitMQ / Azure Service Bus
-    ///   - Background worker processes queue
-    ///   - Risk: Need version ordering per entity (use partition key)
-    /// 
-    /// Option B: Hangfire (Recommended for resilience)
-    ///   - Background job scheduler
-    ///   - Automatic retries + failure tracking
-    ///   - Still maintains sequential processing per entity
-    /// 
-    /// Option C: Event Sourcing
-    ///   - Event log as single source of truth
-    ///   - Async projection to read model
-    ///   - Complex but maximizes scalability
     /// </summary>
     public interface IEventProcessingService
     {
@@ -80,7 +30,7 @@ namespace Challenge.API.Services
         }
 
         /// <summary>
-        /// Process batch of events synchronously within a single transaction.
+        /// Process event asynchronously within a single transaction.
         /// </summary>
         public async Task ProcessEventAsync(CmsEventDto @event)
         {
@@ -161,7 +111,7 @@ namespace Challenge.API.Services
                     ErrorMessage = null
                 };
 
-                _context.WebhookEvents.Add(webhookEvent);
+                await _context.WebhookEvents.AddAsync(webhookEvent);
 
                 _logger.LogInformation(
                     $"Successfully processed {eventType} event for entity {@event.Id} version {@event.Version}");
@@ -197,7 +147,7 @@ namespace Challenge.API.Services
                     CurrentPublishedVersion = 0,
                     Versions = new List<EntityVersion>()
                 };
-                _context.Entities.Add(entity);
+               await _context.Entities.AddAsync(entity);
             }
 
             // Check if version already exists
@@ -333,8 +283,7 @@ namespace Challenge.API.Services
                     ErrorMessage = error
                 };
 
-                _context.WebhookEvents.Add(webhookEvent);
-                // Note: Don't save here - let parent transaction handle it
+                await _context.WebhookEvents.AddAsync(webhookEvent);
             }
             catch (Exception ex)
             {

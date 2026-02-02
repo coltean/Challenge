@@ -25,7 +25,7 @@ namespace Challenge.API.Controllers
         private readonly ApplicationDbContext _writeContext;
         private readonly ILogger<EntitiesController> _logger;
 
-        // Admin users - feel free to customize
+        // Admin users
         private static readonly HashSet<string> AdminUserIds = new()
         {
             "admin",
