@@ -1,4 +1,18 @@
-﻿# Implementation Summary
+﻿# Getting Started
+
+## Prerequisites
+- Docker Desktop installed (Windows or macOS)
+- Git repository cloned to your local machine
+
+## Step 1: Restore NuGet Packages
+
+```bash
+git clone https://github.com/coltean/Challenge.git
+cd Challenge
+docker-compose up --build
+```
+
+# Implementation Summary
 
 ## ✅ Deliverables Checklist
 
@@ -6,7 +20,7 @@
 
 - ✅ **Data Ingestion Layer**
   - Webhook endpoint at `/api/cms/events`
-  - Basic Authentication (username: `cmswh_challenge`, password: GUID)
+  - Basic Authentication (username: `cmswh_challenge`, password: a1b2c3d4-e5f6-7890-abcd-ef1234567890)
   - Batch event validation (up to 1000 events)
   - Event validation and sanitization
   - Support for publish, unpublish, and delete events
@@ -20,16 +34,16 @@
   - Soft-delete (unpublish) for unpublish events
 
 - ✅ **Data Storage**
-  - EF Core + PostgreSQL (default)
+  - EF Core + PostgreSQL
   - Entity version tracking
   - Latest version management
   - Idempotent event processing (EventId duplicate detection)
 
 - ✅ **REST API**
   - GET /api/entities (list entities)
-  - GET /api/entities/{id} (get specific entity)
-  - PUT /api/entities/{id}/disable (admin only)
-  - PUT /api/entities/{id}/enable (admin only)
+  - GET /api/entities/`{id}` (get specific entity)
+  - PUT /api/entities/`{id}`/disable (admin only)
+  - PUT /api/entities/`{id}`/enable (admin only)
   - Role-based access control (API_USER vs ADMIN)
   - Published entities visible to users, unpublished only to admin
 
@@ -47,58 +61,13 @@
   - Health and readiness endpoints (`/health`, `/ready`)
 
 - ✅ **Testing**
-  - Unit tests for event processing
+  - Integration tests for event processing
   - Authentication tests
 
 - ✅ **.NET 9** solution
   - Targets `net9.0`
   - Uses modern C# 13 features
   - Cross-platform support
-
----
-
-## 📁 Project Structure
-
-```
-Challenge/
-├── Challenge.API/                          # Main API project
-│   ├── Controllers/
-│   │   ├── WebhookController.cs           # POST /api/cms/events endpoint
-│   │   ├── EntitiesController.cs          # GET/PUT entity endpoints
-│   │   └── HealthController.cs            # /health and /ready endpoints
-│   ├── Models/
-│   │   ├── Entity.cs                      # Entity model
-│   │   ├── EntityVersion.cs               # Version history
-│   │   ├── WebhookEvent.cs                # Audit trail
-│   │   └── Dto/
-│   │       ├── CmsEventDto.cs             # Request DTO
-│   │       └── EntityDto.cs               # Response DTO
-│   ├── Data/
-│   │   ├── ApplicationDbContext.cs        # Read/Write context
-│   │   ├── ReadOnlyDbContext.cs           # Read-only context
-│   │   └── EntityTypeConfiguration/       # EF model configs
-│   ├── Services/
-│   │   ├── EventProcessingService.cs      # Event processor
-│   │   ├── RabbitMqEventQueueService.cs   # Queue publisher
-│   │   └── RabbitMqEventConsumer.cs       # Background consumer
-│   ├── Validation/
-│   │   ├── CmsEventValidator.cs           # FluentValidation rules
-│   │   └── BatchEventValidator.cs         # Batch validation
-│   ├── Authentication/
-│   │   └── BasicAuthenticationHandler.cs  # Custom Basic Auth
-│   ├── Configuration/
-│   │   └── RabbitMqSettings.cs            # RabbitMQ settings
-│   ├── Program.cs                         # Application startup
-│   ├── appsettings.json                   # Configuration
-│   ├── Challenge.API.csproj               # Project file
-│   └── README.md                          # Feature overview
-├── Documentation/
-│   ├── EVENT_SEMANTICS.md                 # Event type details
-│   ├── SYNC_VS_ASYNC_DECISION.md          # Architecture rationale
-│   ├── SETUP.md                           # Installation guide
-│   └── API_REFERENCE.md                   # API documentation
-└── README.md                              # Top-level readme
-```
 
 ---
 
@@ -130,6 +99,20 @@ Role: ADMIN
 Access: All API_USER endpoints + PUT /api/entities/{id}/disable + PUT /api/entities/{id}/enable
 ```
 
+### DB Connection details
+
+**PostgreSQL DB**:
+- localhost:5432
+- DB name: ChallengeDB
+- DB User: challenge_user
+- DB Password: Challenge123!@
+
+### RabbitMQ management UI details: 
+
+- http://localhost:15673/#/
+- User:guest
+- Password:guest
+
 ---
 
 ## 🧠 Event Processing Logic
@@ -154,7 +137,10 @@ Else:
 **Trigger**: When content should be hidden (soft-delete)
 
 ```
-If version is current published:
+If entity doesn't exist OR version doest not exist:
+  ✅ Log warning
+  ✅ Persist event
+Else If version is currently published:
   ✅ Mark version as unpublished
   ✅ Try to find previous published version
   ✅ If exists: Rollback to previous
@@ -169,6 +155,10 @@ Else:
 
 ```
 Hard delete:
+If entity doesn't exist:
+  ✅ Log warning
+  ✅ Persist event
+Else:
   ✅ Remove entity
   ✅ Cascade delete all versions
 ```
@@ -210,21 +200,17 @@ Webhook requests enqueue events to RabbitMQ and return immediately. A background
 
 ---
 
-## ✅ Highlights
+## ⚠️ Assumptions and notes
 
-### Production Ready
-- ✅ Comprehensive error handling
-- ✅ Input validation and sanitization
-- ✅ SQL injection prevention (EF Core)
-- ✅ Logging and observability
-- ✅ Database migrations
-- ✅ Cross-platform support
-- ✅ Queue-based ingestion with background worker
-
-### Tested
-- ✅ Unit tests for event processing
-- ✅ Authentication tests
-
+- CMS is responsible for the ordering in the batch. What order it sends, we try to preserve
+- The most recently published version is promoted as CurrentPublishedVersion, even if its version number is not the highest
+- With single RabbitMQ consumer, prefetch=1, ack-after-processing, no requeue, we will process messages in queue order in normal operation
+- Secrets are hardcoded for demo simplicity; in real deployments use env
+- Everything is in one API project + one Test Project, fine for small demo project
+- Controllers could be less busy
+- No Mediatr usage, fine for small demos, but works well with cotext separation
+- RabbitMQ is not a true event-streaming platform, but it is well suited for demos and effectively illustrates decoupling principles
+- Not phisically tested on MacOS
 ---
 
 ## ✅ Summary
