@@ -10,9 +10,6 @@ using Challenge.API.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ============================================================================
-// LOGGING & OBSERVABILITY
-// ============================================================================
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
     .WriteTo.Console(outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss}] [{Level:u3}] {Message:lj}{NewLine}{Exception}")
@@ -24,16 +21,10 @@ Log.Logger = new LoggerConfiguration()
 
 builder.Host.UseSerilog();
 
-// ============================================================================
-// DEPENDENCY INJECTION - CORE SERVICES
-// ============================================================================
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// ============================================================================
-// DATABASE CONFIGURATION
-// ============================================================================
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? "Host=localhost;Port=5432;Database=ChallengeDB;Username=challenge_user;Password=Challenge123!@;";
 
@@ -84,41 +75,27 @@ builder.Services.AddAuthorization();
 builder.Services.Configure<RabbitMqSettings>(builder.Configuration.GetSection("RabbitMq"));
 builder.Services.AddSingleton<IEventQueueService, RabbitMqEventQueueService>();
 builder.Services.AddHostedService<RabbitMqEventConsumer>();
-
-// Event Processing Service: Handles synchronous webhook event processing
-// Rationale:
-// - Version sequencing must be guaranteed (events processed in order)
-// - Idempotency checks must be atomic
-// - Transaction scope keeps consistency high
 builder.Services.AddScoped<IEventProcessingService, EventProcessingService>();
 
 
 builder.Services.AddScoped<IValidator<List<CmsEventDto>>, BatchEventValidator>();
 builder.Services.AddScoped<IValidator<CmsEventDto>, CmsEventValidator>();
 
-// ============================================================================
-// BUILD AND CONFIGURE MIDDLEWARE
-// ============================================================================
 var app = builder.Build();
 
 // Configure OpenAPI/Swagger in Development
-//if (app.Environment.IsDevelopment())
-//{
+if (app.Environment.IsDevelopment())
+{
     app.UseSwagger();
     app.UseSwaggerUI();
-//}
+}
 
-// ============================================================================
-// MIDDLEWARE PIPELINE
-// ============================================================================
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
-// ============================================================================
 // DATABASE INITIALIZATION
-// ============================================================================
 if (!app.Environment.IsEnvironment("Testing"))
 {
     try
@@ -126,7 +103,7 @@ if (!app.Environment.IsEnvironment("Testing"))
         using (var scope = app.Services.CreateScope())
         {
             var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            
+
             Log.Information("Applying database migrations...");
             await dbContext.Database.MigrateAsync();
             Log.Information("Database migrations completed successfully");
