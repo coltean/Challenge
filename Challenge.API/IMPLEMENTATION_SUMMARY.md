@@ -99,6 +99,14 @@ Role: ADMIN
 Access: All API_USER endpoints + PUT /api/entities/{id}/disable + PUT /api/entities/{id}/enable
 ```
 
+---
+
+## API Usage
+
+```bash
+check Challenge.postman_collection.json 
+```
+
 ### DB Connection details
 
 **PostgreSQL DB**:

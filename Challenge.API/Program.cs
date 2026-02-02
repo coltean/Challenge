@@ -102,11 +102,11 @@ builder.Services.AddScoped<IValidator<CmsEventDto>, CmsEventValidator>();
 var app = builder.Build();
 
 // Configure OpenAPI/Swagger in Development
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
 
 // ============================================================================
 // MIDDLEWARE PIPELINE
