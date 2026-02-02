@@ -21,6 +21,9 @@ COPY . .
 # Build the project
 RUN dotnet build "Challenge.API/Challenge.API.csproj" -c Release -o /app/build
 
+# Run tests
+RUN dotnet test "Challenge.Tests/Challenge.Tests.csproj" -c Release
+
 # Publish
 RUN dotnet publish "Challenge.API/Challenge.API.csproj" -c Release -o /app/publish
 
