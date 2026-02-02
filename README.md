@@ -218,7 +218,8 @@ Webhook requests enqueue events to RabbitMQ and return immediately. A background
 - Controllers could be less busy
 - No Mediatr usage, fine for small demos, but works well with cotext separation
 - RabbitMQ is not a true event-streaming platform, but it is well suited for demos and effectively illustrates decoupling principles
-- This setup has not been physically tested on macOS, but should work in theory.
+- This setup has not been physically tested on macOS, but should work in theory
+- Have not added retry policy to keep endpoint fast
 ---
 
 ## ✅ Summary
