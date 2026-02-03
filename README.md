@@ -24,6 +24,7 @@ docker-compose up --build
   - Batch event validation (up to 1000 events)
   - Event validation and sanitization
   - Support for publish, unpublish, and delete events
+  - Added Outbox Pattern to decouple batch ingestion from batch processing
   - **Events are queued to RabbitMQ for background processing**
 
 - ✅ **Application Layer**
