@@ -1,6 +1,8 @@
 using Challenge.API.Configuration;
 using Challenge.API.Models.Dto;
 using Microsoft.Extensions.Options;
+using Polly;
+using Polly.Retry;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
@@ -10,12 +12,14 @@ namespace Challenge.API.Services;
 
 public sealed class RabbitMqEventConsumer : BackgroundService
 {
+    private const int MaxRetryAttempts = 3;
     private readonly RabbitMqSettings _settings;
     private readonly ILogger<RabbitMqEventConsumer> _logger;
     private readonly IServiceScopeFactory _scopeFactory;
     private readonly IConnection _connection;
     private readonly IModel _channel;
     private readonly AsyncEventingBasicConsumer _consumer;
+    private readonly AsyncRetryPolicy _retryPolicy;
 
     public RabbitMqEventConsumer(
         IOptions<RabbitMqSettings> options,
@@ -26,6 +30,18 @@ public sealed class RabbitMqEventConsumer : BackgroundService
         _scopeFactory = scopeFactory ?? throw new ArgumentNullException(nameof(scopeFactory));
         _settings = options?.Value ?? throw new ArgumentNullException(nameof(options));
         ValidateSettings();
+
+        _retryPolicy = Policy
+            .Handle<Exception>()
+            .WaitAndRetryAsync(
+                MaxRetryAttempts,
+                attempt => TimeSpan.FromSeconds(Math.Pow(2, attempt)),
+                (exception, delay, attempt, _) =>
+                    _logger.LogWarning(exception,
+                        "Retrying CMS event processing in {DelaySeconds}s (attempt {Attempt}/{MaxAttempts}).",
+                        delay.TotalSeconds,
+                        attempt,
+                        MaxRetryAttempts));
 
         var connectionFactory = new ConnectionFactory
         {
@@ -112,7 +128,7 @@ public sealed class RabbitMqEventConsumer : BackgroundService
 
             using var scope = _scopeFactory.CreateScope();
             var processor = scope.ServiceProvider.GetRequiredService<IEventProcessingService>();
-            await processor.ProcessEventAsync(cmsEvent);
+            await _retryPolicy.ExecuteAsync(() => processor.ProcessEventAsync(cmsEvent));
 
             _channel.BasicAck(eventArgs.DeliveryTag, false);
             _logger.LogInformation("Successfully processed event {EventId}", cmsEvent.Id);

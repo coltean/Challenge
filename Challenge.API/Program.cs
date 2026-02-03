@@ -75,6 +75,8 @@ builder.Services.AddAuthorization();
 builder.Services.Configure<RabbitMqSettings>(builder.Configuration.GetSection("RabbitMq"));
 builder.Services.AddSingleton<IEventQueueService, RabbitMqEventQueueService>();
 builder.Services.AddHostedService<RabbitMqEventConsumer>();
+builder.Services.AddHostedService<OutboxPublisherService>();
+builder.Services.AddScoped<IOutboxBatchService, OutboxBatchService>();
 builder.Services.AddScoped<IEventProcessingService, EventProcessingService>();
 
 

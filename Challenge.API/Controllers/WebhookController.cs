@@ -10,16 +10,16 @@ namespace Challenge.API.Controllers
     [Route("api")]
     public class WebhookController : ControllerBase
     {
-        private readonly IEventQueueService _eventQueueService;
+        private readonly IOutboxBatchService _outboxBatchService;
         private readonly IValidator<List<CmsEventDto>> _batchValidator;
         private readonly ILogger<WebhookController> _logger;
 
         public WebhookController(
-            IEventQueueService eventQueueService,
+            IOutboxBatchService outboxBatchService,
             IValidator<List<CmsEventDto>> batchValidator,
             ILogger<WebhookController> logger)
         {
-            _eventQueueService = eventQueueService;
+            _outboxBatchService = outboxBatchService;
             _batchValidator = batchValidator;
             _logger = logger;
         }
@@ -56,17 +56,17 @@ namespace Challenge.API.Controllers
 
             try
             {
-                await _eventQueueService.EnqueueEventsAsync(events);
+                var batchId = await _outboxBatchService.EnqueueBatchAsync(events, HttpContext.RequestAborted);
 
-                _logger.LogInformation("Batch of {Count} events queued for processing", events.Count);
+                _logger.LogInformation("Batch {BatchId} with {Count} events persisted to outbox", batchId, events.Count);
 
                 // 202 Accepted: Batch has been accepted and is being/will be processed
-                return Accepted(new { message = $"Batch of {events.Count} events accepted for processing" });
+                return Accepted(new { message = $"Batch of {events.Count} events accepted for processing", batchId });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Critical error enqueueing events batch");
-                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Internal server error while queueing events" });
+                _logger.LogError(ex, "Critical error persisting events batch to outbox");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Internal server error while saving events batch" });
             }
         }
     }
