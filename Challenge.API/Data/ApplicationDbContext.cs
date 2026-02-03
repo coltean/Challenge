@@ -11,6 +11,7 @@ namespace Challenge.API.Data
         public DbSet<Entity> Entities => Set<Entity>();
         public DbSet<EntityVersion> EntityVersions => Set<EntityVersion>();
         public DbSet<WebhookEvent> WebhookEvents => Set<WebhookEvent>();
+        public DbSet<OutboxBatch> OutboxBatches => Set<OutboxBatch>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -19,6 +20,7 @@ namespace Challenge.API.Data
             modelBuilder.ApplyConfiguration(new EntityConfig());
             modelBuilder.ApplyConfiguration(new EntityVersionConfig());
             modelBuilder.ApplyConfiguration(new WebhookEventConfig());
+            modelBuilder.ApplyConfiguration(new OutboxBatchConfig());
         }
     }
 }

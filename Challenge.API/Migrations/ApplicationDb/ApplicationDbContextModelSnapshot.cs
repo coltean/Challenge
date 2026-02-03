@@ -136,6 +136,49 @@ namespace Challenge.API.Migrations.ApplicationDb
                     b.ToTable("WebhookEvents");
                 });
 
+            modelBuilder.Entity("Challenge.API.Models.OutboxBatch", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<int>("AttemptCount")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("EventCount")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("LastError")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("NextAttemptAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Payload")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ProcessedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedAt");
+
+                    b.HasIndex("NextAttemptAt");
+
+                    b.HasIndex("Status");
+
+                    b.ToTable("OutboxBatches");
+                });
+
             modelBuilder.Entity("Challenge.API.Models.EntityVersion", b =>
                 {
                     b.HasOne("Challenge.API.Models.Entity", "Entity")
