@@ -8,16 +8,17 @@ namespace Challenge.API.Data
     {
         public ReadOnlyDbContext(DbContextOptions<ReadOnlyDbContext> options) : base(options) { }
 
-        public DbSet<Entity> Entities => Set<Entity>();
-        public DbSet<EntityVersion> EntityVersions => Set<EntityVersion>();
+        public DbSet<EntityProjection> EntityProjections => Set<EntityProjection>();
+        public DbSet<EntityVersionProjection> EntityVersionProjections => Set<EntityVersionProjection>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.ApplyConfiguration(new EntityConfig());
-            modelBuilder.ApplyConfiguration(new EntityVersionConfig());
-            modelBuilder.ApplyConfiguration(new WebhookEventConfig());
+            modelBuilder.ApplyConfiguration(new EntityProjectionConfig());
+            modelBuilder.ApplyConfiguration(new EntityVersionProjectionConfig());
+            modelBuilder.ApplyConfiguration(new EventRecordConfig());
+            modelBuilder.ApplyConfiguration(new OutboxBatchConfig());
         }
 
         public override int SaveChanges()

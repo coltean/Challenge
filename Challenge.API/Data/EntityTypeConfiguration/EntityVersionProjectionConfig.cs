@@ -1,12 +1,12 @@
-﻿using Challenge.API.Models;
+using Challenge.API.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Challenge.API.Data.EntityTypeConfiguration
 {
-    public class EntityVersionConfig : IEntityTypeConfiguration<EntityVersion>
+    public class EntityVersionProjectionConfig : IEntityTypeConfiguration<EntityVersionProjection>
     {
-        public void Configure(EntityTypeBuilder<EntityVersion> entity)
+        public void Configure(EntityTypeBuilder<EntityVersionProjection> entity)
         {
             entity.HasKey(e => e.Id);
             entity.Property(e => e.EntityId).HasMaxLength(255);

@@ -57,7 +57,7 @@ namespace Challenge.API.Controllers
 
             _logger.LogInformation($"GetEntities called by user: {username} (Admin: {isAdmin})");
 
-            var query = _readContext.Entities.AsQueryable();
+            var query = _readContext.EntityProjections.AsQueryable();
 
             // Non-admins only see published entities
             if (!isAdmin)
@@ -104,7 +104,7 @@ namespace Challenge.API.Controllers
 
             _logger.LogInformation($"GetEntity called for {id} by user {username} (Admin: {isAdmin})");
 
-            var entity = await _readContext.Entities
+            var entity = await _readContext.EntityProjections
                 .Include(e => e.Versions)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(e => e.Id == id);
@@ -157,7 +157,7 @@ namespace Challenge.API.Controllers
             var admin = User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "Unknown";
             _logger.LogInformation($"DisableEntity called for {id} by admin {admin}");
 
-            var entity = await _writeContext.Entities.FirstOrDefaultAsync(e => e.Id == id);
+            var entity = await _writeContext.EntityProjections.FirstOrDefaultAsync(e => e.Id == id);
 
             if (entity == null)
             {
@@ -196,7 +196,7 @@ namespace Challenge.API.Controllers
             var admin = User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "Unknown";
             _logger.LogInformation($"EnableEntity called for {id} by admin {admin}");
 
-            var entity = await _writeContext.Entities.FirstOrDefaultAsync(e => e.Id == id);
+            var entity = await _writeContext.EntityProjections.FirstOrDefaultAsync(e => e.Id == id);
 
             if (entity == null)
             {

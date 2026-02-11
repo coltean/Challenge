@@ -72,9 +72,9 @@ builder.Services.AddAuthentication("BasicAuthentication")
 builder.Services.AddAuthorization();
 
 
-builder.Services.Configure<RabbitMqSettings>(builder.Configuration.GetSection("RabbitMq"));
-builder.Services.AddSingleton<IEventQueueService, RabbitMqEventQueueService>();
-builder.Services.AddHostedService<RabbitMqEventConsumer>();
+builder.Services.Configure<KafkaSettings>(builder.Configuration.GetSection("Kafka"));
+builder.Services.AddSingleton<IEventQueueService, KafkaEventQueueService>();
+builder.Services.AddHostedService<KafkaEventConsumer>();
 builder.Services.AddHostedService<OutboxPublisherService>();
 builder.Services.AddScoped<IOutboxBatchService, OutboxBatchService>();
 builder.Services.AddScoped<IEventProcessingService, EventProcessingService>();

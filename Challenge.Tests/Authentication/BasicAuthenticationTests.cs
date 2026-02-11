@@ -405,7 +405,7 @@ namespace Challenge.Tests.Authentication
             builder.ConfigureServices(services =>
             {
                 var hostedServices = services
-                    .Where(descriptor => descriptor.ImplementationType == typeof(RabbitMqEventConsumer))
+                    .Where(descriptor => descriptor.ImplementationType == typeof(KafkaEventConsumer))
                     .ToList();
 
                 foreach (var hostedService in hostedServices)

@@ -73,12 +73,12 @@ namespace Challenge.Tests.Services
             await ProcessEventsAsync(events);
 
             // Assert
-            var entity = await _context.Entities.FirstOrDefaultAsync(e => e.Id == "entity-1");
+            var entity = await _context.EntityProjections.FirstOrDefaultAsync(e => e.Id == "entity-1");
             entity.Should().NotBeNull();
             entity!.CurrentPublishedVersion.Should().Be(1);
             entity.IsPublished.Should().BeTrue();
 
-            var version = await _context.EntityVersions.FirstOrDefaultAsync(v => v.EntityId == "entity-1" && v.VersionNumber == 1);
+            var version = await _context.EntityVersionProjections.FirstOrDefaultAsync(v => v.EntityId == "entity-1" && v.VersionNumber == 1);
             version.Should().NotBeNull();
             version!.IsPublished.Should().BeTrue();
         }
@@ -113,12 +113,12 @@ namespace Challenge.Tests.Services
             await _service.ProcessEventAsync(publishV2);
 
             // Assert
-            var entity = await _context.Entities.FirstOrDefaultAsync(e => e.Id == "entity-2");
+            var entity = await _context.EntityProjections.FirstOrDefaultAsync(e => e.Id == "entity-2");
             entity.Should().NotBeNull();
             entity!.CurrentPublishedVersion.Should().Be(2);
             entity.IsPublished.Should().BeTrue();
 
-            var versions = await _context.EntityVersions
+            var versions = await _context.EntityVersionProjections
                 .Where(v => v.EntityId == "entity-2")
                 .OrderBy(v => v.VersionNumber)
                 .ToListAsync();
@@ -166,11 +166,11 @@ namespace Challenge.Tests.Services
             await ProcessEventsAsync(events);
 
             // Assert
-            var entity = await _context.Entities.FirstOrDefaultAsync(e => e.Id == "entity-3");
+            var entity = await _context.EntityProjections.FirstOrDefaultAsync(e => e.Id == "entity-3");
             entity.Should().NotBeNull();
             entity!.CurrentPublishedVersion.Should().Be(3);
 
-            var versions = await _context.EntityVersions
+            var versions = await _context.EntityVersionProjections
                 .Where(v => v.EntityId == "entity-3")
                 .ToListAsync();
 
@@ -223,13 +223,13 @@ namespace Challenge.Tests.Services
             await _service.ProcessEventAsync(unpublishEvent);
 
             // Assert
-            var v2 = await _context.EntityVersions
+            var v2 = await _context.EntityVersionProjections
                 .FirstOrDefaultAsync(v => v.EntityId == "entity-4" && v.VersionNumber == 2);
             v2.Should().NotBeNull();
             v2!.IsPublished.Should().BeFalse();
             v2.UnpublishedAt.Should().NotBeNull();
 
-            var entity = await _context.Entities.FirstOrDefaultAsync(e => e.Id == "entity-4");
+            var entity = await _context.EntityProjections.FirstOrDefaultAsync(e => e.Id == "entity-4");
             entity.Should().NotBeNull();
             // Should rollback to v1
             entity!.CurrentPublishedVersion.Should().Be(1);
@@ -284,12 +284,12 @@ namespace Challenge.Tests.Services
             await _service.ProcessEventAsync(unpublishV3);
 
             // Assert - should rollback to v2
-            var entity = await _context.Entities.FirstOrDefaultAsync(e => e.Id == "entity-5");
+            var entity = await _context.EntityProjections.FirstOrDefaultAsync(e => e.Id == "entity-5");
             entity.Should().NotBeNull();
             entity!.CurrentPublishedVersion.Should().Be(2);
             entity.IsPublished.Should().BeTrue();
 
-            var v3 = await _context.EntityVersions
+            var v3 = await _context.EntityVersionProjections
                 .FirstOrDefaultAsync(v => v.EntityId == "entity-5" && v.VersionNumber == 3);
             v3.Should().NotBeNull();
             v3!.IsPublished.Should().BeFalse();
@@ -324,12 +324,12 @@ namespace Challenge.Tests.Services
             await _service.ProcessEventAsync(unpublishEvent);
 
             // Assert
-            var entity = await _context.Entities.FirstOrDefaultAsync(e => e.Id == "entity-6");
+            var entity = await _context.EntityProjections.FirstOrDefaultAsync(e => e.Id == "entity-6");
             entity.Should().NotBeNull();
             entity!.IsPublished.Should().BeFalse();
             entity.CurrentPublishedVersion.Should().Be(0);
 
-            var version = await _context.EntityVersions
+            var version = await _context.EntityVersionProjections
                 .FirstOrDefaultAsync(v => v.EntityId == "entity-6" && v.VersionNumber == 1);
             version.Should().NotBeNull();
             version!.IsPublished.Should().BeFalse();
@@ -352,10 +352,10 @@ namespace Challenge.Tests.Services
             await _service.ProcessEventAsync(unpublishEvent);
 
             // Assert - Entity should not be created
-            var entity = await _context.Entities.FirstOrDefaultAsync(e => e.Id == "entity-never-published");
+            var entity = await _context.EntityProjections.FirstOrDefaultAsync(e => e.Id == "entity-never-published");
             entity.Should().BeNull();
 
-            var version = await _context.EntityVersions
+            var version = await _context.EntityVersionProjections
                 .FirstOrDefaultAsync(v => v.EntityId == "entity-never-published" && v.VersionNumber == 2);
             version.Should().BeNull();
         }
@@ -390,10 +390,10 @@ namespace Challenge.Tests.Services
             await _service.ProcessEventAsync(deleteEvent);
 
             // Assert
-            var entity = await _context.Entities.FirstOrDefaultAsync(e => e.Id == "entity-delete-1");
+            var entity = await _context.EntityProjections.FirstOrDefaultAsync(e => e.Id == "entity-delete-1");
             entity.Should().BeNull();
 
-            var versions = await _context.EntityVersions
+            var versions = await _context.EntityVersionProjections
                 .Where(v => v.EntityId == "entity-delete-1")
                 .ToListAsync();
             versions.Should().BeEmpty();
@@ -438,17 +438,14 @@ namespace Challenge.Tests.Services
             await _service.ProcessEventAsync(publishEvent);
             await _service.ProcessEventAsync(publishEvent);
 
-            // Assert - Should only have one WebhookEvent record
-            var webhookEvents = await _context.WebhookEvents
-                .Where(we => we.EntityId == "entity-dup")
+            // Assert - Should only have one event record
+            var eventRecords = await _context.EventRecords
+                .Where(er => er.AggregateId == "entity-dup")
                 .ToListAsync();
 
-            // Should have exactly one processed event
-            webhookEvents.Should().HaveCount(1);
-            webhookEvents[0].IsProcessed.Should().BeTrue();
+            eventRecords.Should().HaveCount(1);
 
-            // Entity should still be correct
-            var entity = await _context.Entities.FirstOrDefaultAsync(e => e.Id == "entity-dup");
+            var entity = await _context.EntityProjections.FirstOrDefaultAsync(e => e.Id == "entity-dup");
             entity.Should().NotBeNull();
             entity!.CurrentPublishedVersion.Should().Be(1);
         }
@@ -488,10 +485,10 @@ namespace Challenge.Tests.Services
             exception.Should().NotBeNull();
 
             // Verify first event was saved
-            var entity1 = await _context.Entities.FirstOrDefaultAsync(e => e.Id == "entity-rollback-1");
+            var entity1 = await _context.EntityProjections.FirstOrDefaultAsync(e => e.Id == "entity-rollback-1");
             entity1.Should().NotBeNull();
 
-            var entity2 = await _context.Entities.FirstOrDefaultAsync(e => e.Id == "entity-rollback-2");
+            var entity2 = await _context.EntityProjections.FirstOrDefaultAsync(e => e.Id == "entity-rollback-2");
             entity2.Should().BeNull();
         }
 
@@ -518,7 +515,7 @@ namespace Challenge.Tests.Services
 
             exception.Should().BeNull();
 
-            var version = await _context.EntityVersions
+            var version = await _context.EntityVersionProjections
                 .FirstOrDefaultAsync(v => v.EntityId == "entity-null-payload" && v.VersionNumber == 1);
             version.Should().NotBeNull();
             version!.Payload.Should().BeEmpty();
@@ -554,7 +551,7 @@ namespace Challenge.Tests.Services
             await _service.ProcessEventAsync(publishEvent);
 
             // Assert
-            var version = await _context.EntityVersions
+            var version = await _context.EntityVersionProjections
                 .FirstOrDefaultAsync(v => v.EntityId == "entity-complex" && v.VersionNumber == 1);
             version.Should().NotBeNull();
             version!.Payload.Should().NotBeNullOrEmpty();
