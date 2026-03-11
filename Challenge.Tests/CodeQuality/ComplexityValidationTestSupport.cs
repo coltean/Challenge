@@ -14,11 +14,13 @@ internal static class ComplexityValidationTestSupport
 
     public static string FixturesRoot => Path.Combine(RepoRoot, "Challenge.Tests", "CodeQuality", "Fixtures");
 
+    public static string OutputFixturesRoot => Path.Combine(AppContext.BaseDirectory, "CodeQuality", "Fixtures");
+
     public static string ScriptsRoot => Path.Combine(RepoRoot, ".specify", "scripts", "powershell");
 
     public static string MaterializeSarifFixture(string targetFileName = "fixture.sarif")
     {
-        var templatePath = Path.Combine(FixturesRoot, "ca1502-findings.sarif");
+        var templatePath = ResolveFixturePath("ca1502-findings.sarif");
         var outputPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"), targetFileName);
         Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
 
@@ -45,7 +47,16 @@ internal static class ComplexityValidationTestSupport
 
     public static string ComputeFixtureFingerprint(string relativeSourcePath, int startLine, int endLine, string symbolId)
     {
-        var absolutePath = Path.Combine(RepoRoot, relativeSourcePath.Replace('/', Path.DirectorySeparatorChar));
+        var relativeSegments = relativeSourcePath.Replace('/', Path.DirectorySeparatorChar);
+        var absolutePath = Path.Combine(RepoRoot, relativeSegments);
+        if (!File.Exists(absolutePath))
+        {
+            var fixtureRelativePath = relativeSegments.StartsWith($"Challenge.Tests{Path.DirectorySeparatorChar}", StringComparison.Ordinal)
+                ? relativeSegments[$"Challenge.Tests{Path.DirectorySeparatorChar}".Length..]
+                : relativeSegments;
+            absolutePath = Path.Combine(AppContext.BaseDirectory, fixtureRelativePath);
+        }
+
         var lines = File.ReadAllLines(absolutePath);
         var startIndex = Math.Max(startLine - 1, 0);
         var endIndex = Math.Min(Math.Max(endLine - 1, startIndex), lines.Length - 1);
@@ -84,6 +95,23 @@ internal static class ComplexityValidationTestSupport
     {
         return JsonSerializer.Deserialize<ComplexityExceptionDocument>(File.ReadAllText(path), JsonOptions)
             ?? throw new InvalidOperationException("Exception document could not be parsed.");
+    }
+
+    private static string ResolveFixturePath(string fileName)
+    {
+        var repoPath = Path.Combine(FixturesRoot, fileName);
+        if (File.Exists(repoPath))
+        {
+            return repoPath;
+        }
+
+        var outputPath = Path.Combine(OutputFixturesRoot, fileName);
+        if (File.Exists(outputPath))
+        {
+            return outputPath;
+        }
+
+        throw new FileNotFoundException($"Could not locate fixture '{fileName}' in repository or test output.", repoPath);
     }
 
     private static ScriptRunResult RunScript(string scriptName, string arguments)

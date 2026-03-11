@@ -32,7 +32,9 @@
 
   <ItemGroup>
     <Compile Remove="CodeQuality\Fixtures\Sources\**\*.cs" />
-    <None Include="CodeQuality\Fixtures\Sources\**\*.cs" />
+    <None Include="CodeQuality\Fixtures\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
