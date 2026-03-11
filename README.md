@@ -222,6 +222,25 @@ Webhook requests enqueue events to RabbitMQ and return immediately. A background
 - RabbitMQ is not a true event-streaming platform, but it is well suited for demos and effectively illustrates decoupling principles
 - This setup has not been physically tested on macOS, but should work in theory
 - Have not added retry policy to keep endpoint fast
+
+## Code Quality
+
+Handwritten production and test code in this repository is expected to stay at cyclomatic complexity 15 or lower.
+Repository validation uses CA1502 plus a checked-in exception manifest in `codequality/complexity-exceptions.json`.
+
+Run the local validation flow with:
+
+```powershell
+pwsh .\.specify\scripts\powershell\validate-complexity.ps1 -SolutionPath .\Challenge.sln -ExceptionsPath .\codequality\complexity-exceptions.json
+```
+
+If you need to refresh the grandfathered baseline during a deliberate standards migration, use:
+
+```powershell
+pwsh .\.specify\scripts\powershell\export-complexity-baseline.ps1 -SolutionPath .\Challenge.sln -OutputPath .\codequality\complexity-exceptions.json -Force
+```
+
+Approved over-threshold exceptions must be reviewed, checked in, and will reopen automatically if the protected code fingerprint changes.
 ---
 
 ## ✅ Summary

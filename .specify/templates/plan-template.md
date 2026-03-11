@@ -41,6 +41,8 @@
   impact for any dependency introduced.
 - Secret management: Confirm no production credentials are hardcoded and all new sensitive
   settings are environment-configurable.
+- Complexity control: Confirm handwritten code will remain at cyclomatic complexity 15 or lower,
+  or record the approved exception path and validation impact.
 
 ## Project Structure
 

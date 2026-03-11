@@ -1,0 +1,36 @@
+name: Complexity Validation
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - '001-*'
+      - 'feature/*'
+  pull_request:
+
+jobs:
+  validate-complexity:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore
+        run: dotnet restore ./Challenge.sln
+
+      - name: Build
+        run: dotnet build ./Challenge.sln --no-restore
+
+      - name: Validate complexity
+        shell: pwsh
+        run: ./.specify/scripts/powershell/validate-complexity.ps1 -SolutionPath ./Challenge.sln -ExceptionsPath ./codequality/complexity-exceptions.json
+
+      - name: Run tests
+        run: dotnet test ./Challenge.Tests/Challenge.Tests.csproj --no-build --logger trx

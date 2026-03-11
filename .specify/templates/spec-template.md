@@ -89,6 +89,8 @@
 - **FR-003**: Users MUST be able to [key interaction, e.g., "reset their password"]
 - **FR-004**: System MUST [data requirement, e.g., "persist user preferences"]
 - **FR-005**: System MUST [behavior, e.g., "log all security events"]
+- **FR-00X Complexity Standard**: Document how handwritten code will stay at cyclomatic complexity 15 or lower,
+  or identify the checked-in exception record required for any approved over-threshold symbol.
 
 ### Constitution Alignment *(mandatory)*
 
@@ -102,6 +104,8 @@
   implications.
 - **CA-005 Secret Management**: Identify any new secrets/configuration and where they are
   sourced at runtime.
+- **CA-006 Complexity Control**: State whether any handwritten code paths risk exceeding cyclomatic
+  complexity 15 and describe the planned refactor or checked-in exception handling.
 
 *Example of marking unclear requirements:*
 

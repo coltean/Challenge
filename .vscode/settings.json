@@ -8,7 +8,12 @@
     },
     "chat.tools.terminal.autoApprove": {
         ".specify/scripts/bash/": true,
-        ".specify/scripts/powershell/": true
+        ".specify/scripts/powershell/": true,
+        "/^Set-Location 'c:\\\\Work\\\\Challenge'; pwsh -NoProfile -ExecutionPolicy Bypass -File '\\.\\\\\\.specify\\\\scripts\\\\powershell\\\\validate-complexity\\.ps1' -SolutionPath '\\.\\\\Challenge\\.sln' -ExceptionsPath '\\.\\\\codequality\\\\complexity-exceptions\\.json'$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "dotnet test": true
     }
 }
 

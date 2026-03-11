@@ -11,6 +11,8 @@ description: "Task list template for feature implementation"
 **Tests**: Include test tasks whenever behavior, contracts, authentication, or processing
 flows change. For this repository style, tests are expected for such changes and are not
 optional.
+Handwritten implementation tasks that risk cyclomatic complexity above 15 MUST include refactoring,
+validation, or approved-exception follow-up work.
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
@@ -158,6 +160,7 @@ Examples of foundational tasks (adjust based on your project):
 - [ ] TXXX [P] Additional unit tests in tests/unit/
 - [ ] TXXX Security hardening
 - [ ] TXXX Run quickstart.md validation
+- [ ] TXXX Verify handwritten code remains at cyclomatic complexity 15 or lower, or update the checked-in exception record
 - [ ] TXXX Add/verify structured logs and correlation IDs for new processing paths
 - [ ] TXXX Validate health/readiness behavior for added dependencies
 - [ ] TXXX Confirm secret/config wiring uses environment or secure provider mechanisms

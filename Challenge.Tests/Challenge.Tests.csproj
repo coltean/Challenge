@@ -30,4 +30,9 @@
     <ProjectReference Include="..\Challenge.API\Challenge.API.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="CodeQuality\Fixtures\Sources\**\*.cs" />
+    <None Include="CodeQuality\Fixtures\Sources\**\*.cs" />
+  </ItemGroup>
+
 </Project>

@@ -1,0 +1,28 @@
+root = true
+
+[*.cs]
+dotnet_diagnostic.CA1502.severity = warning
+
+[*.designer.cs]
+generated_code = true
+
+[*.Designer.cs]
+generated_code = true
+
+[*.generated.cs]
+generated_code = true
+
+[*.Generated.cs]
+generated_code = true
+
+[*.g.cs]
+generated_code = true
+
+[*.g.i.cs]
+generated_code = true
+
+[Challenge.API/Migrations/**/*.cs]
+generated_code = true
+
+[**/obj/**/*.cs]
+generated_code = true

@@ -1,0 +1,6 @@
+{
+  "version": 1,
+  "ruleId": "CA1502",
+  "threshold": 15,
+  "entries": []
+}

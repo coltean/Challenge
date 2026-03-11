@@ -63,6 +63,9 @@ Rationale: This service holds integration credentials and operational messaging 
 ## Technical Standards
 
 - Runtime baseline: .NET 9 and C# 13 for API and worker paths.
+- Handwritten production and test code MUST remain at cyclomatic complexity 15 or lower.
+- Any handwritten symbol that exceeds cyclomatic complexity 15 MUST be either refactored or listed in the
+  checked-in complexity exception record with reviewer approval and fingerprint tracking.
 - Persistence: EF Core migrations MUST be additive and reversible when feasible.
 - Messaging: Queue consumers MUST use explicit ack/nack behavior and bounded retry policy.
 - Validation: Batch limits and payload validation rules MUST remain centralized and test-covered.
@@ -76,7 +79,7 @@ Rationale: This service holds integration credentials and operational messaging 
 2. Test expectations: unit tests are REQUIRED for domain logic changes; integration tests are
 	 REQUIRED for webhook contracts, auth flows, queue processing behavior, and version-state
 	 transitions.
-3. Pre-merge checks: build and relevant test suites MUST pass before merge.
+3. Pre-merge checks: build, relevant test suites, and cyclomatic complexity validation MUST pass before merge.
 4. Review discipline: pull requests MUST map changes to affected principles and note exceptions.
 5. Release readiness: deployment notes MUST include config changes, migration notes, and rollback
 	 considerations for data or queue semantics.
