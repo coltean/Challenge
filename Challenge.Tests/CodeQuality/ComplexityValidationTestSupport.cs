@@ -45,6 +45,14 @@ internal static class ComplexityValidationTestSupport
         return outputPath;
     }
 
+    public static string CreateExceptionsFile(string fileName, ComplexityExceptionDocument document)
+    {
+        var outputPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"), fileName);
+        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+        File.WriteAllText(outputPath, JsonSerializer.Serialize(document, JsonOptions));
+        return outputPath;
+    }
+
     public static string ComputeFixtureFingerprint(string relativeSourcePath, int startLine, int endLine, string symbolId)
     {
         var relativeSegments = relativeSourcePath.Replace('/', Path.DirectorySeparatorChar);
@@ -83,6 +91,18 @@ internal static class ComplexityValidationTestSupport
         return RunScript(
             "export-complexity-baseline.ps1",
             $"-SkipBuild -SarifPath \"{sarifPath}\" -OutputPath \"{outputPath}\" -Force -OutputJson");
+    }
+
+    public static ComplexityExceptionDocument ExportBaselineDocument(string sarifPath)
+    {
+        var outputPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"), "complexity-exceptions.json");
+        var result = RunExportScript(sarifPath, outputPath);
+        if (result.ExitCode != 0)
+        {
+            throw new InvalidOperationException($"Baseline export failed. StdErr: {result.StdErr} StdOut: {result.StdOut}");
+        }
+
+        return ParseExceptionDocument(outputPath);
     }
 
     public static ComplexityValidationResult ParseValidationResult(string stdout)

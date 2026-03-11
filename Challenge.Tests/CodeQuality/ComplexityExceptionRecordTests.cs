@@ -8,39 +8,29 @@ public sealed class ComplexityExceptionRecordTests
     public void ValidateScript_ShouldTreatApprovedExceptionsAsSanctioned()
     {
         var sarifPath = ComplexityValidationTestSupport.MaterializeSarifFixture();
-        var legacyFingerprint = ComplexityValidationTestSupport.ComputeFixtureFingerprint(
-            "Challenge.Tests/CodeQuality/Fixtures/Sources/ComplexitySamples.cs",
-            5,
-            25,
-            "Challenge.Tests.CodeQuality.Fixtures.Sources.ComplexitySamples.LegacyHighComplexity(int)");
-        var newFingerprint = ComplexityValidationTestSupport.ComputeFixtureFingerprint(
-            "Challenge.Tests/CodeQuality/Fixtures/Sources/ComplexitySamples.cs",
-            27,
-            47,
-            "Challenge.Tests.CodeQuality.Fixtures.Sources.ComplexitySamples.NewHighComplexity(int)");
-
+        var baseline = ComplexityValidationTestSupport.ExportBaselineDocument(sarifPath);
+        var first = baseline.Entries[0];
+        var second = baseline.Entries[1];
         var exceptionsPath = ComplexityValidationTestSupport.CreateExceptionsFile(
             "approved-exception.json",
-            new ComplexityExceptionEntry(
-                "grandfathered",
-                "Challenge.Tests",
-                "Challenge.Tests.CodeQuality.Fixtures.Sources.ComplexitySamples.LegacyHighComplexity(int)",
-                "Challenge.Tests\\CodeQuality\\Fixtures\\Sources\\ComplexitySamples.cs",
-                legacyFingerprint,
-                "Grandfathered during adoption",
-                "2026-03-11",
-                "initial-baseline",
-                null),
-            new ComplexityExceptionEntry(
-                "approved-exception",
-                "Challenge.Tests",
-                "Challenge.Tests.CodeQuality.Fixtures.Sources.ComplexitySamples.NewHighComplexity(int)",
-                "Challenge.Tests\\CodeQuality\\Fixtures\\Sources\\ComplexitySamples.cs",
-                newFingerprint,
-                "Switch-heavy logic accepted temporarily",
-                "2026-03-11",
-                "PR-123",
-                null));
+            new ComplexityExceptionDocument(
+                baseline.Version,
+                baseline.RuleId,
+                baseline.Threshold,
+                new[]
+                {
+                    first,
+                    new ComplexityExceptionEntry(
+                        "approved-exception",
+                        second.Project,
+                        second.SymbolId,
+                        second.FilePath,
+                        second.Fingerprint,
+                        "Switch-heavy logic accepted temporarily",
+                        second.CreatedOn,
+                        "PR-123",
+                        second.ExpiresOn)
+                }));
 
         var result = ComplexityValidationTestSupport.RunValidateScript(sarifPath, exceptionsPath);
 

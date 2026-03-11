@@ -8,24 +8,14 @@ public sealed class ComplexityEnforcementContractTests
     public void ValidateScript_ShouldIgnoreNonCa1502ResultsAndClassifyGrandfatheredEntries()
     {
         var sarifPath = ComplexityValidationTestSupport.MaterializeSarifFixture();
-        var fingerprint = ComplexityValidationTestSupport.ComputeFixtureFingerprint(
-            "Challenge.Tests/CodeQuality/Fixtures/Sources/ComplexitySamples.cs",
-            5,
-            25,
-            "Challenge.Tests.CodeQuality.Fixtures.Sources.ComplexitySamples.LegacyHighComplexity(int)");
-
+        var baseline = ComplexityValidationTestSupport.ExportBaselineDocument(sarifPath);
         var exceptionsPath = ComplexityValidationTestSupport.CreateExceptionsFile(
             "exceptions.json",
-            new ComplexityExceptionEntry(
-                "grandfathered",
-                "Challenge.Tests",
-                "Challenge.Tests.CodeQuality.Fixtures.Sources.ComplexitySamples.LegacyHighComplexity(int)",
-                "Challenge.Tests\\CodeQuality\\Fixtures\\Sources\\ComplexitySamples.cs",
-                fingerprint,
-                "Grandfathered during adoption",
-                "2026-03-11",
-                "initial-baseline",
-                null));
+            new ComplexityExceptionDocument(
+                baseline.Version,
+                baseline.RuleId,
+                baseline.Threshold,
+                new[] { baseline.Entries[0] }));
 
         var result = ComplexityValidationTestSupport.RunValidateScript(sarifPath, exceptionsPath);
 
