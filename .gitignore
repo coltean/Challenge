@@ -240,6 +240,7 @@ ClientBin/
 *.publishsettings
 *.sarif
 codequality/artifacts/
+!Challenge.Tests/CodeQuality/Fixtures/*.sarif
 orleans.codegen.cs
 
 # Including strong name files can present a security risk

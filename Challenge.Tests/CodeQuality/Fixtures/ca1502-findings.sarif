@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json.schemastore.org/sarif-1.0.0",
+  "version": "1.0.0",
+  "runs": [
+    {
+      "tool": {
+        "name": "Microsoft (R) Visual C# Compiler"
+      },
+      "results": [
+        {
+          "ruleId": "CA1502",
+          "level": "warning",
+          "message": "Method 'Challenge.Tests.CodeQuality.Fixtures.Sources.ComplexitySamples.LegacyHighComplexity(int)' has a cyclomatic complexity of '18'. Rewrite or refactor the code to decrease its complexity below '16'.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "__ROOT__/Challenge.Tests/CodeQuality/Fixtures/Sources/ComplexitySamples.cs",
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 5,
+                  "endLine": 25,
+                  "endColumn": 6
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1502",
+          "level": "warning",
+          "message": "Method 'Challenge.Tests.CodeQuality.Fixtures.Sources.ComplexitySamples.NewHighComplexity(int)' has a cyclomatic complexity of '17'. Rewrite or refactor the code to decrease its complexity below '16'.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "__ROOT__/Challenge.Tests/CodeQuality/Fixtures/Sources/ComplexitySamples.cs",
+                "region": {
+                  "startLine": 27,
+                  "startColumn": 5,
+                  "endLine": 47,
+                  "endColumn": 6
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA2254",
+          "level": "note",
+          "message": "The logging message template should not vary.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "__ROOT__/Challenge.API/Controllers/HealthController.cs",
+                "region": {
+                  "startLine": 50,
+                  "startColumn": 5,
+                  "endLine": 50,
+                  "endColumn": 35
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
